@@ -1,0 +1,86 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #313236;
+  border-radius: 2px;
+}
+
+.navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.navbar a {
+  color: #aaa;
+  display: inline-block;
+  font-size: 15px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+
+.content {
+  max-width: 1280px;
+  margin: auto;
+  padding-left: 10px;
+}
+
+footer {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  padding: 50px 0 30px 0;
+}
+footer p, footer a {
+  font-size: 12px;
+  color: #999;
+}
+.my-box {
+  width: 300px;         /* Sets the width of the box */
+  padding: 20px;        /* Space between the content and the border */
+  border: 2px solid #000; /* A 2px solid black border */
+  margin: 20px;         /* Space outside the box */
+  background-color: #f0f0f0; /* Light gray background color */
+  border-radius: 10px;  /* Optional: Rounds the corners */
+  margin-left: auto; /* Needs a defined width to work */
+  margin-right: auto; /* Needs a defined width to work */
+}
+
+#centerp {
+  text-align: center
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-container {
+    display: grid;                            /* Enable Grid on the parent */
+    grid-template-columns: 1fr 1fr;           /* Create two equal-width columns */
+    height: auto;  
+    text-align: center;"                          
+}
+
+.left-panel, .right-panel {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.left-panel {
+    background-color: #f1f1f1;
+    border-right: 1px solid #ccc;
+}
+
+.right-panel {
+    background-color: #ddd;
+}
