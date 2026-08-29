@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 - Electronics Design - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week05.html" title="Week 5">&#8592;</a>
+        <h1>Week 6: Electronics Design</h1>
+        <a class="week-nav-arrow" href="week07.html" title="Week 7">&#8594;</a>
+      </div>
+
+      <img src="images/week06_hero.jpg" alt="Electronics Design — schematic, PCB layout and 3D view of the PedestrianLight board" class="hero-image">
+      <p class="hero-caption">Electronics Design — schematic, PCB layout and 3D render of the PedestrianLight board</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week focused on electronics design — using EDA (Electronic Design Automation) tools
+        to draw schematics and lay out a PCB, understanding design rules, and preparing files for fabrication.
+      </p>
+
+      <p style="text-align:center; max-width:700px; margin: 0 auto 40px; color:#555;">
+        New to electronics components? <a href="#components">Scroll to the bottom</a> for a quick reference guide — <em>Getting a Grip on the Components</em>.
+      </p>
+
+      <!-- Row 1: GIF left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week06_01.gif" alt="Wokwi simulation of pedestrian traffic light — button triggers light sequence">
+        </div>
+        <div class="media-desc">
+          <h3>Simulation (Wokwi)</h3>
+          <p>
+            Wokwi is a free, browser-based electronics simulator that lets you build and test circuits without any physical hardware.
+            It supports a wide range of microcontrollers — including the Raspberry Pi Pico, Arduino, and ESP32 — and simulates components
+            like LEDs, buttons, sensors, and displays in real time. You write code directly in the browser, run the simulation, and interact
+            with the virtual components just as you would with real hardware. It is particularly useful for prototyping and debugging before
+            committing to a physical build.
+          </p>
+          <h4>Pedestrian Traffic Light</h4>
+          <p>
+            The circuit simulates a pedestrian crossing light using a Raspberry Pi Pico, three LEDs (red, yellow, green),
+            and a push button. Project files: <a href="files/Pedestrian Light.zip"><span class="file-icon">📦</span> Pedestrian Light.zip</a>
+          </p>
+          <p><strong>How the code works:</strong></p>
+          <ol>
+            <li>On startup, the <strong>green LED</strong> turns on — traffic flows normally.</li>
+            <br>
+            <li>When the pedestrian presses the button, the pin is pulled LOW (to GND). The code detects this and begins the crossing sequence.</li>
+            <br>
+            <li><strong>Green → Yellow</strong> (1 second) — warning that the light is about to change.</li>
+            <br>
+            <li><strong>Yellow → Red</strong> (4 seconds) — traffic stops, pedestrians cross.</li>
+            <br>
+            <li><strong>Red → Yellow → off</strong> (500 ms) — brief amber before traffic resumes.</li>
+            <br>
+            <li>Loop restarts — green comes back on.</li>
+          </ol>
+          <div style="border: 2px solid #e65100; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #fff8f5;">
+            <strong>Pull-up vs Pull-down</strong><br><br>
+            The button is configured as <code>INPUT_PULLUP</code>.
+            This means the pin is held HIGH internally (connected to 3.3 V through a resistor inside the chip),
+            and pressing the button connects it to GND, pulling it LOW.
+            A pull-down configuration is the opposite — the pin sits at GND by default and goes HIGH when pressed.
+            Pull-up is more common on microcontrollers because most MCUs have built-in pull-up resistors,
+            so no external resistor is needed on the breadboard.
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week06_02.jpg" alt="KiCad 9.0 project manager showing tools including Schematic Editor, PCB Editor and 3D Viewer">
+        </div>
+        <div class="media-desc">
+          <h3>Electronics Design (KiCad)</h3>
+          <p>
+            KiCad is a free, open-source EDA (Electronic Design Automation) suite used to design printed circuit boards.
+            It takes a circuit from concept to fabrication-ready files — you draw the schematic, lay out the PCB, verify the design,
+            and export Gerber files for manufacturing. KiCad is widely used in the maker and open-hardware community and is the standard
+            tool used at Fab Labs for board design.
+          </p>
+          <p>
+            <strong>Note:</strong> Install the <a href="https://gitlab.fabcloud.org/pub/libraries/electronics/kicad" target="_blank">KiCad FabLib</a>
+            from <em>Tools → Plugin and Content Manager</em>. This makes it easy to define footprints for producing PCBs at a standard Fab Lab.
+          </p>
+          <h4>KiCad Work Flow</h4>
+          <ol>
+            <li>
+              <strong>Schematic Editor</strong> — Draw the circuit diagram by placing component symbols and connecting them with wires.
+              This defines the logical connections between all parts before any physical layout begins.
+            </li>
+            <br>
+            <li>
+              <strong>PCB Editor</strong> — Import the schematic netlist and arrange component footprints on the board.
+              Route copper traces between pads, set board outline, and apply design rules for track width and clearance.
+            </li>
+            <br>
+            <li>
+              <strong>3D Viewer</strong> — Preview a realistic 3D render of the finished board with components placed,
+              useful for checking component fit, orientation, and overall board aesthetics before sending to fabrication.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week06_03.jpg" alt="KiCad Schematic Editor showing the pedestrian light circuit with RP2040, LEDs and button">
+        </div>
+        <div class="media-desc">
+          <h3>Schematic for Pedestrian Light using Pico</h3>
+          <p>
+            <strong>Place Symbol Tool</strong> — Components are added to the schematic using the Place Symbol tool on the right toolbar (or press <code>A</code>).
+            Search for the component by name, select it from the library, and click to place it on the canvas.
+            The FabLib components appear here once the library is installed.
+          </p>
+
+          <p>
+            <strong>Wiring with Labels</strong> — Components are connected either by drawing wires directly between pins,
+            or by using net labels (press <code>L</code>). Labels are especially useful for keeping the schematic clean —
+            two pins with the same label are electrically connected without needing a visible wire between them.
+            This avoids long crossing wires and makes the schematic much easier to read.
+          </p>
+
+          <p>
+            <strong>Electrical Rule Check (ERC)</strong> — Once the schematic is complete, run the ERC from the Inspect menu.
+            It checks for common errors such as unconnected pins, conflicting pin types, or missing power flags.
+            All ERC errors should be resolved before moving to the PCB editor to avoid issues during layout.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week06_04.jpg" alt="KiCad PCB Editor showing the routed PedestrianLight board with copper traces">
+        </div>
+        <div class="media-desc">
+          <h3>PCB Editor</h3>
+          <p>
+            After completing the schematic, open the PCB Editor and import the netlist. Footprints from the schematic appear as unplaced components connected by ratsnest lines showing the required connections.
+          </p>
+          <p>
+            <strong>Component Arrangement</strong> — Place components on the board by dragging footprints into position.
+            Group related parts together — for example, keeping resistors close to the LEDs they limit.
+            Good placement minimises the length and number of crossing traces during routing.
+          </p>
+          <p>
+            <strong>Routing</strong> — Use the Route Track tool (<code>X</code>) to draw copper traces between pads, following the ratsnest lines.
+          </p>
+          <p>
+            <strong>Edge Cut</strong> — The board outline is drawn on the Edge.Cuts layer. Switch to this layer and use the draw tools to define the physical boundary of the PCB.
+            Everything outside the edge cut will be removed during fabrication, so make sure all components and traces sit within it.
+          </p>
+          <p>
+            <strong>Design Rule Check (DRC)</strong> — Run the DRC from the Inspect menu once routing is complete.
+            It flags clearance violations, unrouted nets, and copper outside the board outline.
+            All errors must be resolved before exporting files for fabrication.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week06_05.jpg" alt="KiCad Board Setup — Constraints dialog showing minimum clearance and track width settings">
+        </div>
+        <div class="media-desc">
+          <h3>Points to Note</h3>
+          <p>
+            Before routing, set the design constraints in <em>File → Board Setup → Design Rules → Constraints</em>.
+            These define the minimum dimensions the PCB mill can reliably cut and ensure the exported files are manufacturable at the Fab Lab.
+          </p>
+          <p>
+            <strong>Clearance and Track Width for Milling</strong> — Set minimum clearance and minimum track width to <strong>0.4 mm</strong>.
+            This matches the diameter of the milling bit used at most Fab Labs and ensures traces are spaced far enough apart to be cut cleanly without bridging.
+            For ground and power traces where higher current is expected, use a track width of <strong>0.8 mm</strong> for added reliability.
+            Traces should be wide enough for the current they carry. Avoid sharp 90° corners; use 45° bends instead to reduce signal reflections and milling issues.
+          </p>
+          <p>
+            <strong>J1 and J2 Connectors</strong> — The board includes J1 (a power/programming header) and J2 (a general-purpose I/O connector).
+            Adding these connectors means the board is not limited to the pedestrian light circuit — it exposes the Pico's pins so the board
+            can be reprogrammed and reused for other purposes without needing to desolder or modify any components.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 6: 3D Viewer -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week06_06.jpg" alt="KiCad 3D Viewer showing the PedestrianLight board with components in 3D">
+        </div>
+        <div class="media-desc">
+          <h3>3D Viewer</h3>
+          <p>
+            The 3D Viewer (<em>View → 3D Viewer</em>) renders a realistic preview of the board with all components placed,
+            giving a clear picture of what the physical board will look like before it is fabricated.
+            It is useful for spotting issues that are not obvious in the flat PCB editor — such as components overlapping,
+            silkscreen labels being obscured, or the board being larger than expected.
+          </p>
+          <p>
+            It is also a good way to verify that connectors have enough room to fit. In this design, the J2 connector and the
+            USB-C port on the Pico module are both visible in the 3D view — checking here confirmed there was adequate clearance
+            around them for cables to plug in without obstruction from neighbouring components.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 7: Gerber Files -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week06_07.jpg" alt="Gerber2PNG tool showing the PedestrianLight board rendered as a high-resolution PNG">
+        </div>
+        <div class="media-desc">
+          <h3>Exporting Gerber Files</h3>
+          <p>
+            A <strong>Gerber file</strong> is the industry-standard format for describing a PCB design to fabrication machines.
+            It contains separate files for each layer of the board — copper traces, board outline, silkscreen, solder mask, and drill holes —
+            each encoded as a set of vector instructions that tell the machine exactly where to cut, mill, or expose.
+          </p>
+          <p>
+            To export from KiCad, go to <em>File → Fabrication Outputs → Gerbers</em>. Select the layers needed
+            (F.Cu for the copper layer and Edge.Cuts for the board outline) and click Generate.
+          </p>
+          <p>
+            I used <a href="https://gerber2png.fablabkerala.in" target="_blank"><strong>Gerber2PNG</strong></a>,
+            a tool developed by FabLab Kerala and used by Fab Labs across the world,
+            to convert the Gerber files into high-resolution PNG images for the milling machine.
+            The tool renders the copper and outline layers, producing the precise black-and-white images
+            that the milling workflow requires to trace and cut the board.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Component reference table -->
+      <div id="components" style="margin: 48px 0 40px;">
+        <h2>Getting a Grip on the Components</h2>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem; margin-top:16px;">
+          <thead>
+            <tr style="background:#1a56a0; color:#fff; text-align:left;">
+              <th style="padding:10px 14px; width:22%;">Component</th>
+              <th style="padding:10px 14px; width:10%;">Type</th>
+              <th style="padding:10px 14px;">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">Resistor</td>
+              <td style="padding:10px 14px; color:#888;">Passive</td>
+              <td style="padding:10px 14px;">Limits current flow. Measured in Ohms (Ω). Value read from colour bands or printed SMD code.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">Capacitor</td>
+              <td style="padding:10px 14px; color:#888;">Passive</td>
+              <td style="padding:10px 14px;">Stores and releases energy in an electric field. Measured in Farads (F). Used for decoupling, filtering, and timing. Polarised types must face the correct direction.</td>
+            </tr>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">Inductor</td>
+              <td style="padding:10px 14px; color:#888;">Passive</td>
+              <td style="padding:10px 14px;">Stores energy in a magnetic field. Measured in Henrys (H). Used in power supplies and filters. Resists sudden changes in current.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">Diode</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Allows current in one direction only (anode → cathode). Used for rectification and reverse-polarity protection. Stripe on body marks the cathode.</td>
+            </tr>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">LED</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Emits light when current flows through it. Always needs a current-limiting resistor. Colour determines the forward voltage.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">DigiKey LED Calculator</td>
+              <td style="padding:10px 14px; color:#888;">Tool</td>
+              <td style="padding:10px 14px;">Free online calculator for sizing the LED resistor. Input supply voltage, forward voltage, and desired current to get the correct resistor value.</td>
+            </tr>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">Forward Voltage</td>
+              <td style="padding:10px 14px; color:#888;">Concept</td>
+              <td style="padding:10px 14px;">Minimum voltage required for a diode or LED to conduct. ~1.8 V for red, ~2.1 V for yellow/green, ~3.0–3.3 V for blue and white.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">Zener Diode</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Operates in reverse breakdown at a fixed voltage. Used as a voltage reference or to clamp against voltage spikes.</td>
+            </tr>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">Voltage Regulator</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Maintains a stable output voltage. Linear types (e.g. LM7805) are simple but waste energy as heat; switching regulators are more efficient.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">Transistor</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Three terminals: <em>Emitter</em>, <em>Base</em>, <em>Collector</em>. A small Base current controls a larger Collector–Emitter current. Always check the data sheet for pinout and ratings — they vary between packages.</td>
+            </tr>
+            <tr style="background:#f5f8ff;">
+              <td style="padding:10px 14px; font-weight:600;">MOSFET</td>
+              <td style="padding:10px 14px; color:#888;">Active</td>
+              <td style="padding:10px 14px;">Three terminals: <em>Source</em>, <em>Gate</em>, <em>Drain</em>. Voltage-controlled — no Gate current needed. N-channel turns on when Gate is HIGH; P-channel turns on when Gate is LOW.</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 14px; font-weight:600;">Crystal</td>
+              <td style="padding:10px 14px; color:#888;">Passive</td>
+              <td style="padding:10px 14px;">Vibrates at a precise frequency to provide an accurate clock signal for microcontrollers and communication ICs.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/Pedestrian Light.zip"><span class="file-icon">📦</span> Pedestrian Light.zip</a></li>
+          <li><a href="files/PedestrianLight.kicad_sch"><span class="file-icon">📄</span> PedestrianLight.kicad_sch</a></li>
+          <li><a href="files/PedestrianLight.kicad_pcb"><span class="file-icon">📄</span> PedestrianLight.kicad_pcb</a></li>
+          <li><a href="files/Gerber.zip"><span class="file-icon">📦</span> Gerber.zip</a></li>
+          <li><a href="files/Gerber2png.zip"><span class="file-icon">🖼️</span> Gerber2png.zip</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>

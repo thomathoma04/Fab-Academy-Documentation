@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9 - Input Devices - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week08.html" title="Week 8">&#8592;</a>
+        <h1>Week 9: Input Devices</h1>
+        <a class="week-nav-arrow" href="week10.html" title="Week 10">&#8594;</a>
+      </div>
+
+      <img class="hero-image" src="images/week09_hero.jpg" alt="Input Devices — EC11 rotary encoder breakout PCB connected to the XIAO ESP32-C6 test board">
+      <p class="hero-caption">Input Devices — EC11 Rotary Encoder Breakout PCB</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week focused on input devices — understanding how sensors and encoders communicate with a microcontroller,
+        designing a dedicated breakout PCB for the EC11 rotary encoder, and writing firmware to read and interpret the encoder signal.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week09_ec11pinout.jpg" alt="EC11 rotary encoder pinout diagram showing CLK, DT, SW, VCC and GND pins">
+        </div>
+        <div class="media-desc">
+          <h3>What is a Rotary Encoder?</h3>
+          <p>
+            A <strong>rotary encoder</strong> is an electromechanical input device that converts the angular
+            position or motion of a shaft into an electrical signal. Unlike a potentiometer, it has no
+            start or end position — it can rotate continuously in either direction.
+          </p>
+          <p>
+            The <strong>EC11</strong> is an incremental rotary encoder with a built-in push switch.
+            It outputs two quadrature signals — <strong>A (CLK)</strong> and <strong>B (DT)</strong> —
+            that are 90° out of phase with each other. By reading the order in which these signals
+            change, the microcontroller can determine both the direction and speed of rotation.
+          </p>
+          <p>
+            The encoder also has a <strong>push switch (SW)</strong> that closes when the shaft is pressed
+            down — useful as a mode toggle or confirmation input.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week09_quadrature.jpg" alt="Quadrature signal diagram showing A and B waveforms 90 degrees out of phase">
+        </div>
+        <div class="media-desc">
+          <h3>How Quadrature Encoding Works</h3>
+          <p>
+            As the encoder shaft rotates, pins A and B produce square waves that are offset by 90°.
+            The relationship between the two signals at any transition tells you the direction of rotation:
+          </p>
+          <ul>
+            <li><strong>Clockwise:</strong> A changes first — when A falls, B is still HIGH</li>
+            <li><strong>Counter-clockwise:</strong> B changes first — when A falls, B is already LOW</li>
+          </ul>
+          <p>
+            In code, this is read by sampling pin B at the moment pin A changes state:
+          </p>
+          <pre><code>if (digitalRead(PIN_B) != currentA) {
+  direction = +1; // Clockwise
+} else {
+  direction = -1; // Counter-clockwise
+}</code></pre>
+          <p>
+            Internal pull-up resistors on the microcontroller hold A and B HIGH at rest.
+            The encoder pulls them LOW as the shaft rotates, generating the pulse train.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week09_schematic.jpg" alt="KiCad schematic for the EC11 breakout board showing encoder connected to JST 6-pin connector with debounce capacitors">
+        </div>
+        <div class="media-desc">
+          <h3>Schematic — EC11 Breakout Board</h3>
+          <p>
+            A dedicated breakout PCB was designed to house the EC11 encoder and expose its signals
+            through a <strong>JST PH 6-pin connector</strong>, allowing it to connect cleanly to the
+            test board via a cable.
+          </p>
+          <p>
+            The schematic includes <strong>100nF debounce capacitors</strong> on the CLK, DT, and SW lines.
+            These suppress the mechanical contact bounce that occurs each time the encoder's internal
+            contacts make or break — without them, a single detent can register as multiple pulses
+            and produce incorrect counts.
+          </p>
+          <p>
+            The capacitors work by forming an RC filter with the microcontroller's internal pull-up resistor,
+            smoothing the rising and falling edges of the signal. No external resistors are needed since
+            the ESP32-C6 provides sufficient pull-up resistance internally.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week09_pcb.jpg" alt="KiCad PCB layout for the EC11 breakout board showing encoder footprint, capacitors and JST connector">
+        </div>
+        <div class="media-desc">
+          <h3>PCB Layout — EC11 Breakout Board</h3>
+          <p>
+            The PCB was kept minimal — the EC11 encoder, three 0603 debounce capacitors, and the JST connector
+            are the only components. The layout follows a few key principles:
+          </p>
+          <ul>
+            <li>Debounce capacitors placed as close as possible to the EC11 pads to maximise filtering effectiveness</li>
+            <li>JST connector positioned at the board edge for easy cable access</li>
+            <li>Traces routed at 0.4mm width with 45° bends to suit the milling process</li>
+            <li>Board outline sized to fit within the final housing alongside the encoder shaft</li>
+          </ul>
+          <p>
+            A <strong>DRC (Design Rule Check)</strong> was run before export to confirm no clearance
+            violations or unrouted nets remained.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week09_ec11board.jpg" alt="Milled EC11 breakout PCB with encoder and capacitors soldered">
+        </div>
+        <div class="media-desc">
+          <h3>Fabrication and Assembly</h3>
+          <p>
+            The breakout board was milled on the <strong>Carvera CNC</strong> using the same workflow
+            as the test board from Week 8 — Gerber files exported from KiCad, converted to PNG via
+            Gerber2PNG, toolpaths generated in Mods, and sent to the machine via Carvera Controller.
+          </p>
+          <p>
+            Assembly order followed standard SMD practice:
+          </p>
+          <ol>
+            <li>Solder the three 0603 debounce capacitors first — smallest components go on before larger ones</li>
+            <li>Solder the JST connector, checking alignment before reflowing both rows of pads</li>
+            <li>Press-fit the EC11 encoder into its through-hole pads and solder all five pins</li>
+            <li>Inspect under magnification for solder bridges, particularly on the JST connector pads</li>
+            <li>Test continuity between each encoder pin and the corresponding JST pin before connecting to the test board</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Row 6: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week09_output.gif" alt="EC11 breakout board connected to the ESP32-C6 test board via JST cable">
+        </div>
+        <div class="media-desc">
+          <h3>Connecting to the Test Board</h3>
+          <p>
+            The breakout board connects to the <strong>XIAO ESP32-C6 test board</strong> via a JST PH cable
+            plugged into connector <strong>J2</strong>. The pin mapping is:
+          </p>
+          <table style="width:100%; border-collapse:collapse; font-size:0.88rem; margin-top:8px;">
+            <thead>
+              <tr style="background:#1a56a0; color:#fff; text-align:left;">
+                <th style="padding:8px 12px;">JST Pin</th>
+                <th style="padding:8px 12px;">Signal</th>
+                <th style="padding:8px 12px;">ESP32-C6 GPIO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#f5f8ff;">
+                <td style="padding:8px 12px;">1</td><td style="padding:8px 12px;">GND</td><td style="padding:8px 12px;">GND</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 12px;">2</td><td style="padding:8px 12px;">VCC</td><td style="padding:8px 12px;">3V3</td>
+              </tr>
+              <tr style="background:#f5f8ff;">
+                <td style="padding:8px 12px;">3</td><td style="padding:8px 12px;">CLK (A)</td><td style="padding:8px 12px;">GPIO1</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 12px;">4</td><td style="padding:8px 12px;">DT (B)</td><td style="padding:8px 12px;">GPIO2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Row 7: Code box left, description right -->
+      <div class="media-row">
+        <div class="media-photo" style="display: flex; min-height: 300px;">
+          <div style="background: #1e1e1e; border: 1px solid #ccc; border-radius: 6px; overflow-y: auto; width: 500px; max-height: 300px; padding: 12px; font-family: 'Courier New', monospace; font-size: 0.75rem; line-height: 1.4; color: #d4d4d4;">
+            <pre style="margin: 0; white-space: pre; word-wrap: normal;">#define PIN_LED  22
+#define PIN_BUZZ 17
+#define PIN_A    1    // EC11 CLK → GPIO1
+#define PIN_B    2    // EC11 DT  → GPIO2
+
+// ── Encoder state ───────────────────────────────────────
+int lastA           = 0;
+int count           = 0;
+int pending         = 0;
+unsigned long lastPulse = 0;
+const unsigned long GAP = 1000;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_LED,  OUTPUT);
+  pinMode(PIN_BUZZ, OUTPUT);
+  pinMode(PIN_A,    INPUT_PULLUP);
+  pinMode(PIN_B,    INPUT_PULLUP);
+  lastA = digitalRead(PIN_A);
+
+  // ── LED flash test: 5 seconds ───────────────────────
+  Serial.println("LED test — flashing for 5 seconds");
+  unsigned long start = millis();
+  while (millis() - start &lt; 5000) {
+    digitalWrite(PIN_LED, HIGH);
+    delay(250);
+    digitalWrite(PIN_LED, LOW);
+    delay(250);
+  }
+
+  // ── Buzzer beep test ────────────────────────────────
+  Serial.println("Buzzer test — beeping once");
+  tone(PIN_BUZZ, 2730, 500);
+  delay(500);
+  noTone(PIN_BUZZ);
+
+  Serial.println("Encoder test — rotate the EC11 to see count");
+}
+
+void loop() {
+  int currentA = digitalRead(PIN_A);
+
+  if (currentA != lastA) {
+    pending   = (digitalRead(PIN_B) != currentA) ? 1 : -1;
+    lastPulse = millis();
+  }
+  lastA = currentA;
+
+  if (pending != 0 &amp;&amp; millis() - lastPulse >= GAP) {
+    count += pending;
+    pending = 0;
+    Serial.print("Count: ");
+    Serial.println(count);
+
+    // Blink LED once to confirm a turn was registered
+    digitalWrite(PIN_LED, HIGH);
+    delay(100);
+    digitalWrite(PIN_LED, LOW);
+  }
+}</pre>
+          </div>
+        </div>
+        <div class="media-desc">
+          <h3>Firmware — Reading the Encoder</h3>
+          <p>
+            The firmware reads the encoder using a polling approach — checking pin A every loop iteration
+            and comparing it to the previous state. When A changes, pin B is sampled to determine direction.
+            A <strong>1000ms gap timer</strong> prevents a fast rotation from registering multiple counts
+            before the user has finished moving.
+          </p>
+          <p>
+            The sketch uses three key variables:
+          </p>
+          <ul>
+            <li><code>lastA</code> — previous state of pin A, used to detect a change</li>
+            <li><code>pending</code> — direction stored (+1 CW, -1 CCW) waiting to be committed</li>
+            <li><code>lastPulse</code> — timestamp of the most recent pulse, for the gap timer</li>
+          </ul>
+          <p>
+            Output is sent to the <strong>Serial Monitor</strong> at 115200 baud, printing the
+            cumulative count after each committed turn.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 8: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week09_output.jpg" alt="Serial monitor showing turn count output as the encoder is rotated">
+        </div>
+        <div class="media-desc">
+          <h3>Testing and Output</h3>
+          <p>
+            With the breakout board connected and the sketch uploaded, the Serial Monitor shows the
+            turn count updating in real time as the encoder is rotated. Rotating clockwise increments
+            the count; counter-clockwise decrements it.
+          </p>
+          <p>
+            The debounce capacitors on the breakout board work in combination with the software gap
+            timer to produce clean, reliable counts — no false triggers from contact bounce.
+          </p>
+          <div style="border: 2px solid #1a56a0; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #f5f8ff;">
+            <strong>Note on Pull-up Resistors</strong><br><br>
+            The ESP32-C6's internal pull-up resistors are enabled in firmware using
+            <code>pinMode(PIN_A, INPUT_PULLUP)</code>. This eliminates the need for
+            external pull-up resistors on the breakout board, keeping the design simple.
+            The encoder's A and B pins rest at HIGH and are pulled LOW as the shaft rotates.
+          </div>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/EC11_Breakout_Gerber.zip"><span class="file-icon">📦</span> EC11 Breakout Gerber.zip</a></li>
+          <li><a href="files/EC11_Breakout_Gerber2png.zip"><span class="file-icon">🖼️</span> EC11 Breakout Gerber2png.zip</a></li>
+          <li><a href="files/ec11_turn_counter.ino"><span class="file-icon">📄</span> ec11_turn_counter.ino</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>

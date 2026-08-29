@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 3 - Tom Thomas - Fab Academy documentation</title>
+    <title>Week 3 - Computer-Controlled Cutting - Tom Thomas - Fab Academy</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
   </head>
   <body>
     <div class="navbar">
@@ -14,28 +30,149 @@
         <a href="../about.html">About</a>
       </div>
     </div>
-      <h1 style="text-align: center;">Week 3: Computer-Controlled Cutting</h1>
-      <p></p>
-      <p style="text-align: center;">
-        <h3>group assignment</h3>
-        <br>• do your lab's safety training
-        <br>• characterize your lasercutter's focus, power, speed, rate, kerf, joint clearance and types 
-        <h3>individual assignment:</h3>
-        <br>• cut something on the vinylcutter
-        <br>• design, lasercut, and document a parametric construction kit, accounting for the lasercutter kerf
-        <br>• extra credit: design it to be assembled in multiple ways
-        <br>• extra credit: include elements that aren't flat 
-        <br>• extra credit: engrave as well as cut
 
-      
-    
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week02.html" title="Week 2">&#8592;</a>
+        <h1>Week 3: Computer-Controlled Cutting</h1>
+        <a class="week-nav-arrow" href="week04.html" title="Week 4">&#8594;</a>
+      </div>
+
+      <img src="images/week03_hero.jpg" alt="Assembled cardboard construction kit" class="hero-image">
+      <p class="hero-caption">Laser-cut cardboard parametric construction kit — assembled</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week covered the use of computer-controlled cutting machines — the vinyl cutter and the laser cutter.
+        The group assignment involved characterising the laser cutter's settings, while individually I designed
+        and cut a parametric construction kit and produced a vinyl sticker.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week03_02.jpg" alt="Fusion 360 parameters dialog showing kerf and compression values">
+        </div>
+        <div class="media-desc">
+          <h3>Kerf, Compression and Fillet</h3>
+          <p><strong>Kerf</strong> — The width of material removed by a cutting tool during a cut. In laser cutting, kerf is the gap left by the laser beam. Accounting for kerf in a design ensures parts fit together correctly — slots are made slightly narrower so the cut produces the intended final dimension.</p>
+          <p><strong>Compression</strong> — In the context of press-fit joints, compression refers to the intentional interference between two mating parts. A slot is designed slightly smaller than the tab that fits into it, so the material compresses slightly on assembly — creating a tight, friction-held joint that holds without glue or fasteners.</p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week03_01.jpg" alt="Parametric construction kit design in Fusion 360">
+        </div>
+        <div class="media-desc">
+          <h3>Parametric Construction Kit Design</h3>
+          <p>
+            Made the design of a parametric construction kit in Fusion 360.
+            The kit consists of interlocking pieces whose slot dimensions are driven by parameters,
+            making it easy to adjust the fit for any material thickness.
+          </p>
+          <p><strong>Parametric Design</strong> — A modelling approach where dimensions are driven by variables (parameters) rather than fixed values. Changing a single parameter — like material thickness — automatically updates all dependent geometry, making it easy to adapt a design for different materials or tolerances without redrawing from scratch.</p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week03_07.jpg" alt="Fusion 360 construction kit extruded with fillets">
+        </div>
+        <div class="media-desc">
+          <h3>Fillet and Chamfer</h3>
+          <p>When laser cutting press-fit joints, internal corners tend to accumulate stress and can cause the material to crack when a tab is inserted.</p>
+          <p>Adding a small fillet (a rounded internal corner) or chamfer (an angled cut) to slot corners relieves this stress concentration, makes assembly easier by guiding the tab in, and significantly reduces the chance of the material splitting — especially important with brittle materials like acrylic.</p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week03_08.jpg" alt="Final 2D sketch of construction kit in Fusion 360">
+        </div>
+        <div class="media-desc">
+          <h3>Final 2D Sketch</h3>
+          <p>Convert the 3D figure into a 2D sketch. If there are 2 bodies, the 2nd body will need to be selected and projected into the sketch of the first body (use shortcut P).</p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week03_05.jpg" alt="Inkscape stroke width set to 0.1mm for laser cutting">
+        </div>
+        <div class="media-desc">
+          <h3>Preparing the File in Inkscape</h3>
+          <ol>
+            <li>The construction kit was exported from Fusion 360 as a DXF and opened in Inkscape.</li>
+            <br>
+            <li>For the laser cutter to recognise lines as cut paths, changed the fill to blank and stroke to 0.1mm using the Fill and Stroke dialog. Generally, strokes are used for cutting and fill for engraving.</li>
+            <br>
+            <li>Changed the stroke colour to red. Different colours can be used for creating different rules for cutting and engraving.</li>
+            <br>
+            <li>Saved the file as SVG and sent it to the system connected to the Laser Cutting Machine.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week03_03.jpg" alt="Trotec laser cutter material settings — Power 80, Speed 4, 1000Hz">
+        </div>
+        <div class="media-desc">
+          <h3>Setting Laser Cutter Parameters</h3>
+          <p>
+            In Trotec JobControl X, the material database was used to set the cut parameters for 3mm cardboard —
+            Power 80, Speed 4.00, and 1000 Hz PPI with Air Assist on.
+            These values control how deep and cleanly the laser cuts through the material without scorching the edges.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week03_04.jpg" alt="Print Kit 1.dxf loaded on Trotec cutting bed">
+        </div>
+        <div class="media-desc">
+          <h3>Sending the Job to the Laser Cutter</h3>
+          <p>
+            In the Trotec JobControl X, the DXF file sent from Inkscape appears as "Print Kit 1.dxf" on the cutting bed preview. The file was positioned on the material and the cut job was started from the software.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 6: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week03_06.jpg" alt="Final laser-cut MDF construction kit pieces assembled">
+        </div>
+        <div class="media-desc">
+          <h3>Final Cut &amp; Assembly</h3>
+          <p>
+            The construction kit pieces were laser-cut from 3mm MDF and assembled into multiple configurations.
+            The parametric kerf and compression values in the design ensured a snug press-fit between the interlocking tabs and slots —
+            holding together firmly without glue or fasteners.
+          </p>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/Construction kit 1.f3d"><span class="file-icon">📦</span> Construction kit 1.f3d</a></li>
+        </ul>
+      </div>
+
+    </div>
 
     <footer>
-      <p>Copyright 2026 &#60;Your name&#62; - Creative Commons Attribution Non Commercial </p>
-      <p>Source code hosted at <a href="https://gitlab.fabcloud.org/academany/fabacademy/2026/labs/kochi/students/abhishek-shah" target="_blank">gitlab.fabcloud.org</a></p>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
     </footer>
   </body>
 </html>
-
-
-

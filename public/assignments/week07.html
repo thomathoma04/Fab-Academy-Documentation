@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 - Computer-Controlled Machining - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week06.html" title="Week 6">&#8592;</a>
+        <h1>Week 7: Computer-Controlled Machining</h1>
+        <a class="week-nav-arrow" href="week08.html" title="Week 8">&#8594;</a>
+      </div>
+
+      <img src="images/week07_hero.jpg" alt="Finished CNC-milled plywood step stool at Fab Lab Kerala" class="hero-image">
+      <p class="hero-caption">Eli Step — CNC-milled plywood step stool, designed in Fusion 360 and milled on a ShopBot at Fab Lab Kerala</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week focused on computer-controlled machining — designing a large-scale part,
+        generating toolpaths with CAM software, setting up the CNC mill, and operating the machine
+        to cut the final piece from sheet material.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_01.jpg" alt="Fusion 360 sketch of the guitar body side profile with parametric dimensions">
+        </div>
+        <div class="media-desc">
+          <h3>Start with a Surface</h3>
+          <p>Fusion was used in hybrid mode — combining surface and solid modelling — to design the multiple components of the part within a single file, keeping all the pieces aligned and referencing the same set of parameters.</p>
+          <p>
+            <strong>Parametric Design</strong> — The sketch was driven entirely by user parameters (e.g. <code>Height_Step</code>, <code>Depth_Step</code>, <code>Width_Step</code>, <code>Thick_Wood</code>)
+            rather than fixed numbers. Changing a single parameter automatically updates every dimension that depends on it,
+            making it easy to adjust the design for different material thickness or scale without redrawing the sketch.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_02.jpg" alt="Fusion 360 sketch on a second plane showing finger-joint slots, referenced from the side surface">
+        </div>
+        <div class="media-desc">
+          <h3>Sketch All Surfaces</h3>
+          <p>
+            <strong>Using the First Sketch as Reference</strong> — The original side surface sketch was used as a reference when creating sketches on the other planes.
+            By projecting key points and lines from the first sketch, the new sketches stay aligned with it automatically,
+            so the surfaces fit together correctly when the part is assembled.
+          </p>
+          <p>
+            <strong>Fully Constrained Sketch</strong> — Every dimension and geometric relationship in each sketch should be constrained.
+            In Fusion 360, fully constrained geometry turns black, while under-constrained geometry stays blue/green and can shift unexpectedly.
+            Giving each sketch proper constraints early prevents the model from breaking later when parameters are changed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_03.jpg" alt="Fusion 360 model showing extruded 3D components built from the sketches">
+        </div>
+        <div class="media-desc">
+          <h3>Create 3D Bodies</h3>
+          <p>
+            Once the sketches were in place, each profile was extruded to create the 3D bodies that make up the object being designed.
+            Extruding pushes a flat sketch profile out by a defined distance to form a new solid body, cut from an existing body or join with an existing body.
+            To create duplicate or similar bodies, either use mirror function or use extrusion with an offset.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_04.jpg" alt="Fusion 360 assembled model showing bodies converted into components with wood appearance">
+        </div>
+        <div class="media-desc">
+          <h3>Create Components</h3>
+          <p>
+            Each body was converted into its own component so it could be positioned, hidden, and machined independently.
+            Right-click a body in the browser and select <em>Create Components from Bodies</em> to convert it.
+            Once converted, the appearance of each component can be changed individually — select the component and press
+            <code>A</code> to open the Appearance dialog and assign a material or colour, as shown here with the wood finish.
+          </p>
+          <div style="border: 2px solid #e65100; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #fff8f5;">
+            <strong>Chamfer and Dogbones</strong><br><br>
+            Add a small <strong>chamfer</strong> to sharp edges that will be handled or assembled, to ease fit and avoid splintering.
+            For internal corners on press-fit or finger joints, add <strong>dogbones</strong> — small relief cuts at the corner —
+            to compensate for the round profile of the milling bit, since a round tool cannot cut a perfectly sharp internal corner.
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_05.jpg" alt="Fusion 360 components arranged flat for milling, separated from the assembled model">
+        </div>
+        <div class="media-desc">
+          <h3>Arrange Components</h3>
+          <p>
+            Once all the components were created, they were laid out flat so the arrangement fits within the plywood
+            piece that will be milled. Components were positioned to make efficient use of the sheet while keeping
+            enough spacing between parts for the milling bit to cut cleanly.
+          </p>
+          <div style="border: 2px solid #e65100; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #fff8f5;">
+            <strong>Matching the Actual Plywood Size</strong><br><br>
+            Plywood sheets vary slightly in thickness across the sheet, so several width measurements were taken
+            at different points using calipers, then averaged. The averaged value was updated in the corresponding
+            Fusion 360 parameter so the slot widths in the design match the real material — ensuring the joints
+            fit snugly instead of being too loose or too tight when milled.
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 6: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_06.jpg" alt="Final Fusion 360 sketch projected from the arranged components, ready for CAM">
+        </div>
+        <div class="media-desc">
+          <h3>Exporting for CAM</h3>
+          <p>
+            The arranged components were projected onto a single sketch to get the final flat sketch that will be
+            used for milling. This sketch geometry was then exported as a <strong>DXF</strong> file, the format
+            used to bring the cut paths into CAM software.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 7: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_07.jpg" alt="VCarve Pro ShopBot Edition Job Setup dialog showing job size and material thickness">
+        </div>
+        <div class="media-desc">
+          <h3>Preparing Machine for Milling</h3>
+          <p>
+            <strong>VCarve Pro – ShopBot Edition</strong> is a CAD/CAM software specifically designed for
+            ShopBot CNC machines. This software generates the toolpaths that the machine will follow during
+            the milling process.
+          </p>
+          <p>
+            In VCarve, a new file was created and the job size was set based on the dimensions of the plywood
+            being used. The calculated material thickness also needs to be added.
+          </p>
+          <p>
+            <strong>File → Import Vectors</strong> was used to select the necessary DXF file. If the imported
+            geometry is out of bounds, the shortcut <code>M</code> activates the move tool, which can be used
+            to drag the design and place it inside the working area.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 8: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_08.jpg" alt="VCarve Pro Tool Database dialog showing the 6 mm single-flute end mill settings">
+        </div>
+        <div class="media-desc">
+          <h3>Setting up Tooling values</h3>
+          <p>
+            The tool used was a <strong>6 mm single-flute end mill</strong>, with the feed rate set to
+            <strong>1200 mm/min</strong>.
+          </p>
+          <p>
+            The total cut depth should be set slightly deeper than the actual material thickness.
+            This ensures the tool cuts completely through the plywood and slightly into the sacrificial layer,
+            preventing incomplete cuts caused by small thickness variations in the material.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 9: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_09.jpg" alt="VCarve toolpath dialog showing tabs added to the design to hold loose pieces in place">
+        </div>
+        <div class="media-desc">
+          <h3>Material Handling</h3>
+          <p>
+            Tabs were added for pieces which could come loose once cut. The tabs retain a small connection that
+            holds these pieces in place during milling, and can be easily removed afterward.
+          </p>
+          <div style="border: 2px solid #e65100; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #fff8f5;">
+            <strong>Securing the Plywood</strong><br><br>
+            The plywood sheet was secured to the bed with nails so that it doesn't move around during the milling
+            process. If it is difficult to predict the path of the drill bit, mark safe spots in the design and
+            mill these points a few mm deep first — this shows exactly where it is safe to place the nails in
+            the plywood without interfering with the toolpath.
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 10: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_10.jpg" alt="VCarve toolpath preview showing slot and outline cuts with direction arrows">
+        </div>
+        <div class="media-desc">
+          <h3>Set Tool Path</h3>
+          <p>
+            A drilling toolpath was then created in VCarve. The slot toolpath was set to <strong>Inside Cut</strong>,
+            ensuring that the tool moves along the inner side of the vector so the slot dimensions remain accurate.
+          </p>
+          <div style="border: 2px solid #e65100; border-radius: 8px; padding: 16px 20px; margin-top: 16px; background: #fff8f5;">
+            <strong>Cut Order Matters</strong><br><br>
+            It's important to do the inside cuts before moving on to the outside cuts, so that the pieces don't
+            move around once they are freed from the surrounding material during milling.
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 11: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_11.jpg" alt="VCarve 3D View showing the simulated final output of the milled plywood sheet">
+        </div>
+        <div class="media-desc">
+          <h3>Generating the Toolpath</h3>
+          <p>
+            After calculating the toolpath, the 3D preview showed the final expected output.
+            The toolpaths were exported as <strong>ShopBot Part Files (.SBP)</strong>.
+          </p>
+          <p>Ready to turn on the machine and mill now.</p>
+        </div>
+      </div>
+
+      <!-- Row 12: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_13.jpg" alt="ShopBot CNC spindle cutting through the plywood sheet">
+        </div>
+        <div class="media-desc">
+          <h3>Milling with ShopBot CNC</h3>
+          <p>
+            The job was run using the <strong>ShopBot command console</strong>. The tool displays the X, Y, and Z axis
+            positions in real time and allows full control of the CNC operation.
+          </p>
+          <p>
+            Before starting, the <strong>origin (zero position)</strong> of the machine must be set — the existing
+            values belong to a previous job and need to be reset for the plywood being used.
+          </p>
+          <p>
+            <strong>Setting X and Y to zero</strong> — Move the tool to the desired start corner of the plywood using
+            the arrow keys in the console, then zero the X and Y axes from the console menu.
+          </p>
+          <p>
+            <strong>Setting Z to zero</strong> — ShopBot uses an automatic Z-zeroing plate: place the plate under
+            the bit, run the Z-zero routine, and the machine sets the surface height automatically.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 13: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_12.gif" alt="ShopBot CNC milling the plywood sheet">
+        </div>
+        <div class="media-desc">
+          <h3>Milling in Progress</h3>
+          <p>
+            The green button starts the cutting process. The spindle was turned on, followed by turning on the
+            vacuum system for milling dust. The spindle controller displays a digital readout indicating that
+            the spindle is active.
+          </p>
+          <p>
+            Remain in the room and monitor the machine continuously for any issues, such as tool breakage,
+            loose parts, or unexpected movements.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 14: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_15.jpg" alt="Person wearing safety goggles, respirator mask and gloves during CNC milling">
+        </div>
+        <div class="media-desc">
+          <h3>Safety Gear</h3>
+          <p>
+            CNC milling generates fine wood dust and loud noise, so proper protective equipment is essential.
+            <strong>Ear muffs</strong> are critical — prolonged exposure to the loud noise of the spindle and
+            vacuum system can cause permanent hearing damage over time.
+            <strong>Safety goggles</strong> protect the eyes from flying debris,
+            <strong>gloves</strong> protect the hands when handling freshly cut pieces with sharp edges,
+            and an <strong>apron</strong> keeps clothing clear of dust and splinters.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 15: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week07_14.jpg" alt="Milled plywood pieces laid out after cutting, with reciprocating sander nearby">
+        </div>
+        <div class="media-desc">
+          <h3>Post Processing</h3>
+          <p>
+            Holding tabs which held together larger pieces were broken with a chisel and rubber mallet and
+            smoothened with a file.
+          </p>
+          <p>
+            The edges and surfaces were then sanded using a reciprocating sander to improve the finish and
+            remove machining marks.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 16: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week07_16.jpg" alt="Assembled plywood step stool being used by a child">
+        </div>
+        <div class="media-desc">
+          <h3>Assembling and Finishing</h3>
+          <p>
+            The milled parts were pressed together by hand. The <strong>chamfers</strong> on the edges made it
+            easy to guide pieces into their slots and seat them firmly without forcing.
+          </p>
+          <p>
+            For finishing, <strong>wood sanding sealer</strong> was applied first to raise the grain and seal
+            the surface, followed by <strong>PU (polyurethane) varnish</strong>. This combination protects
+            the wood from moisture and gives it a smooth, durable finish.
+          </p>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/Eli Step.dxf"><span class="file-icon">📄</span> Eli Step.dxf</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 - 3D Printing and Scanning - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week04.html" title="Week 4">&#8592;</a>
+        <h1>Week 5: 3D Printing and Scanning</h1>
+        <a class="week-nav-arrow" href="week06.html" title="Week 6">&#8594;</a>
+      </div>
+
+      <img src="images/week05_hero.jpg" alt="Finished 3D printed spur gear" style="width:100%; max-height:420px; object-fit:cover; border-radius:10px; margin:24px 0 10px; display:block;">
+      <p style="text-align:center; color:#666; font-size:0.9rem; margin-bottom:40px;">Finished 3D printed spur gear — PETG filament, Bambu Lab printer</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week explored additive manufacturing — designing a 3D model, preparing it for printing
+        using a slicer, and understanding how print settings affect the final output.
+        I designed a spur gear in Fusion 360, exported it as an STL, sliced it in Bambu Studio,
+        and printed it on a Bambu Lab printer.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week05_01.jpg" alt="Fusion 360 spur gear model being exported as STL">
+        </div>
+        <div class="media-desc">
+          <h3>Designing the Gear in Fusion 360</h3>
+          <p>
+            I designed a spur gear in Fusion 360 using the gear generator under the Design tab.
+            The model was built up across multiple bodies visible in the browser panel on the left.
+            Once the geometry was finalised, I used the <em>Save as Mesh</em> dialog to export
+            the design as an STL file in millimetres — the standard format for 3D printing.
+            The export was set to <em>One File</em> structure to keep all bodies together.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week05_02.jpg" alt="Cross-section view of gear showing internal hollow structure">
+        </div>
+        <div class="media-desc">
+          <h3>Inspecting the Internal Structure</h3>
+          <p>
+            Using Fusion 360's section analysis tool, I cut through the gear to examine its internal geometry.
+            The cross-section reveals a hollow core with two circular cutouts on either side of the hub,
+            reducing material usage while maintaining structural integrity.
+            The hatching pattern in the view clearly distinguishes solid material from empty space,
+            confirming the design is ready for efficient 3D printing with minimal infill required.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week05_03.jpg" alt="Gear sliced in Bambu Studio with layer colour map">
+        </div>
+        <div class="media-desc">
+          <h3>Slicing in Bambu Studio</h3>
+          <p>
+            The STL was imported into Bambu Studio and sliced for a Bambu Lab printer using PLA Basic filament.
+            The colour map on the right shows the print speed across the model — slower speeds (cooler colours)
+            on fine outer walls and faster speeds (warmer colours) on interior fills.
+            Settings such as top/bottom surface patterns, shell layers, infill density, and sparse infill
+            were configured in the left panel. The sliced preview confirms clean layer paths across the gear teeth.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week05_04.jpg" alt="Bambu Lab printer screen showing Gear_3D.3mf printing at 100%">
+        </div>
+        <div class="media-desc">
+          <h3>Printing</h3>
+          <p>The .3mf file with g-code was transferred to the Bambu P1C printer with a micro USB card. The file was selected from the printer UI and print started.</p>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/Gear_3D.stl"><span class="file-icon">📦</span> Gear_3D.stl</a></li>
+          <li><a href="files/Gear_3D.3mf"><span class="file-icon">🖨️</span> Gear_3D.3mf</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>

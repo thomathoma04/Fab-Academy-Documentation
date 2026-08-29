@@ -43,16 +43,127 @@ footer p, footer a {
   font-size: 12px;
   color: #999;
 }
-.my-box {
-  width: 300px;         /* Sets the width of the box */
-  padding: 20px;        /* Space between the content and the border */
-  border: 2px solid #000; /* A 2px solid black border */
-  margin: 20px;         /* Space outside the box */
-  background-color: #f0f0f0; /* Light gray background color */
-  border-radius: 10px;  /* Optional: Rounds the corners */
-  margin-left: auto; /* Needs a defined width to work */
-  margin-right: auto; /* Needs a defined width to work */
+/* 3-column card grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 10px;
 }
+
+@media (max-width: 900px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+.my-box {
+  padding: 20px;
+  border: 2px solid rgba(0,0,0,0.15);
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Per-week palette colours from ColouPalette.png — exact hex values */
+.week-color-1  { background-color: #e5c7ad; }
+.week-color-2  { background-color: #d0b6a5; }
+.week-color-3  { background-color: #c4bab0; }
+.week-color-4  { background-color: #d9bbb3; }
+.week-color-5  { background-color: #d5b88e; }
+.week-color-6  { background-color: #bf9e8f; }
+.week-color-7  { background-color: #cd9a7b; }
+.week-color-8  { background-color: #c57e50; }
+.week-color-9  { background-color: #a46845; }
+.week-color-10 { background-color: #777b6d; }
+.week-color-11 { background-color: #a39787; }
+.week-color-12 { background-color: #a48364; }
+.week-color-13 { background-color: #929876; }
+.week-color-14 { background-color: #93a187; }
+.week-color-15 { background-color: #819089; }
+.week-color-16 { background-color: #8e9b8a; }
+.week-color-17 { background-color: #7e94a2; }
+.week-color-18 { background-color: #626e7c; }
+.week-color-19 { background-color: #3e4b65; }
+
+.my-box h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.my-box a {
+  font-size: 0.9rem;
+}
+
+/* Status slider */
+.status-track {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd;
+  overflow: visible;
+}
+
+.status-track::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s, background-color 0.3s;
+}
+
+/* Not started — red, slider at ~0% */
+.status-not-started .status-track::before {
+  width: 15%;
+  background-color: #e53935;
+}
+
+/* In progress — orange, slider at ~33% */
+.status-in-progress .status-track::before {
+  width: 38%;
+  background-color: #fb8c00;
+}
+
+/* Assignment done — lime green, slider at ~66% */
+.status-assignment-done .status-track::before {
+  width: 68%;
+  background-color: #bccd42;
+}
+
+/* Documentation done — green, slider at 100% */
+.status-doc-done .status-track::before {
+  width: 100%;
+  background-color: #43a047;
+}
+
+.status-label {
+  font-size: 0.72rem;
+  color: #555;
+  margin-top: 2px;
+}
+
+/* Knob on the slider */
+.status-track::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #888;
+  transition: left 0.3s, border-color 0.3s;
+}
+
+.status-not-started .status-track::after     { left: calc(15% - 7px);  border-color: #e53935; }
+.status-in-progress .status-track::after     { left: calc(38% - 7px);  border-color: #fb8c00; }
+.status-assignment-done .status-track::after { left: calc(68% - 7px);  border-color: #bccd42; }
+.status-doc-done .status-track::after        { left: calc(100% - 14px); border-color: #43a047; }
 
 #centerp {
   text-align: center
@@ -83,4 +194,156 @@ body, html {
 
 .right-panel {
     background-color: #ddd;
+}
+
+/* Week heading navigation */
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0 8px;
+}
+
+.week-nav h1 {
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.week-nav-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  color: #555;
+  text-decoration: none;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.week-nav-arrow:hover {
+  border-color: #1a56a0;
+  color: #1a56a0;
+  background: #f0f5ff;
+}
+
+.week-nav-arrow.disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Files section */
+.files-section {
+  margin-top: 60px;
+  padding: 24px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.files-section h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.files-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.files-list li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.88rem;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.files-list li a:hover {
+  background-color: #e8f0fe;
+  border-color: #4a90d9;
+  color: #1a56a0;
+}
+
+.files-list li a .file-icon {
+  font-size: 1.1rem;
+}
+
+/* Alternating photo / description rows */
+.media-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.media-row:last-child {
+  border-bottom: none;
+}
+
+.media-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.media-row .media-photo {
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+
+.media-row .media-photo img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  border: 2px solid #ccc;
+}
+
+.media-row .media-photo .photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.9rem;
+  border: 2px dashed #bbb;
+}
+
+.media-row .media-desc {
+  flex: 1;
+}
+
+.media-row .media-desc h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 700px) {
+  .media-row,
+  .media-row.reverse {
+    flex-direction: column;
+  }
+  .media-row .media-photo {
+    flex: unset;
+    max-width: 100%;
+    width: 100%;
+  }
 }

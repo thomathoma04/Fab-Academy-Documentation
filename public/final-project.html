@@ -43,6 +43,84 @@
 
       <p>Wind it based on the amount of time you need for a task and the rune will let you know when the time is up.</p>
 
+      <br>
+      <h2>Bill of Materials</h2>
+
+        <h4 style="margin: 24px 0 8px;">Microcontroller</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Component</th>
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">ESP32-C6</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Main microcontroller — runs firmware, controls all peripherals</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="margin: 24px 0 8px;">Input</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Component</th>
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">EC11 Rotary Encoder</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Sets the timer duration by counting CW turns</td></tr>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Cherry MX (MX1A-L1NN)</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Power on/off button</td></tr>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">1P3T Rotary Switch</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Mode selection — hours / minutes / seconds</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="margin: 24px 0 8px;">Output</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Component</th>
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">WS2812B 12-LED NeoPixel Ring</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Visualises time remaining — dims one LED per interval</td></tr>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">SG90 Micro Servo</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Sweeps needle 0°–180° to show time remaining</td></tr>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">CL8530A Passive Buzzer</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Alarm sound when timer reaches zero</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="margin: 24px 0 8px;">Power</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Component</th>
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">603450 LiPo 1000mAh</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Main battery</td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="margin: 24px 0 8px;">Passives</h4>
+        <table style="width:100%; border-collapse:collapse; font-size:0.92rem;">
+          <thead>
+            <tr style="background:#f0f4ff;">
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Component</th>
+              <th style="text-align:left; padding:8px 12px; border-bottom:2px solid #dde3f0;">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">100nF cap × 3</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Debounce — EC11 CLK, DT, SW lines</td></tr>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">100nF cap × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Debounce — Cherry MX power button</td></tr>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">100µF cap × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Decoupling — NeoPixel VCC rail</td></tr>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">100µF cap × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Decoupling — SG90 servo 5V rail</td></tr>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">330Ω resistor × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Signal protection — NeoPixel DIN line</td></tr>
+            <tr><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">BC547 / 2N2222 transistor × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Buzzer driver — GPIO can't source enough current for 16Ω buzzer</td></tr>
+            <tr style="background:#f5f8ff;"><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">1kΩ resistor × 1</td><td style="padding:8px 12px; border-bottom:1px solid #eef0f5;">Base resistor for buzzer transistor</td></tr>
+          </tbody>
+        </table>
+
      <!--  <table border="1">
         <thead>
           <tr>

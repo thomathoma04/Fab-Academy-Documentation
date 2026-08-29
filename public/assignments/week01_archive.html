@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 - Tom Thomas - Fab Academy documentation [ARCHIVE]</title>
+    <link rel="stylesheet" href="../style.css">
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1 style="text-align: center;">Week 1: Project Management and Final Project</h1>
+      <br>
+      <h1 style="text-align: center;">Final Project</h1>
+
+      <p>I'm considering two projects at the moment. The final decision will be taken after getting feedback from the Fab Gurus in Super FabLab Kerala.</p>
+      <div class="grid-container">
+    <div class="left-panel">
+        <h2>TimeWinder</h2>
+      <p>A rune that gives the user the ability to control time.</p>
+      <p>
+        <img src="../images/idea2.jpg" alt="" style="max-width:320px;" />
+      </p>
+    </div>
+    <div class="right-panel">
+        <h2>ComLink</h2>
+      <p>A device to send status messages to close friends, families and allies.</p>
+      <p>
+        <img src="../images/idea1.jpg" alt="" style="max-width:320px;" />
+      </p>
+    </div>
+</div>
+      <br>
+      <h1 style="text-align: center;">Project Management</h1>
+
+      <p>Two tools, primarily used by developers, were set up for managing the documentation, publishing, and version control.</p>
+
+      <h2>Setting up Git</h2>
+      <ol>
+        <li>Installed Homebrew from the Mac Terminal using the below command. Xcode and Git installed automatically.</li>
+            <pre>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+        <br>
+        <li>Set up the ssh key using the below command.
+          <br>Note: I chose the destination folder as .ssh in home folder. The dot makes it a hidden folder. I didn't add a passcode, but it is good to add one. And don't publish the private key anywhere. Private key is the randomart image inside the box.</li>
+            <pre>ssh-keygen -o  </pre>
+            <img src="../images/W1_I4.jpg" alt="" style="max-width:450px; margin: 20px;" />
+        <li>Copied the public key from terminal using the below command. This creates a public key & private key pair for authentication.</li>
+            <pre>cat ~/.ssh/id_ed25519.pub</pre>
+        <br>
+        <li>Logged in, added a new blank project in <a href="https://git.fablabkerala.in/">https://git.fablabkerala.in/</a> and named it <em>Tom - Fab-Academy</em></li>
+        <br>
+        <li>Added the public key I had copied in Git Preferences.</li>
+            <img src="../images/W1_I6.jpg" alt="" style="max-width:450px; margin: 20px;" />
+        <br>
+        <li>Copied clone url from git.</li>
+            <img src="../images/W1_I7.jpg" alt="" style="max-width:320px; margin: 20px;" />
+        <li>Executed the below clone command to create a Local Repo.
+          <br>Note: The URL copied earlier needs to be added here and a tunnel is established between the lcoal repository on your system and the one on the git cloud. The tunnel's lock is the public key and the only key that will fit the lock is the private key pair you generated on your local system. </li>
+            <pre>git clone git@gitssh.fablabkerala.in:tom/tom-fab-academy.git</pre>
+            <img src="../images/W1_I8.jpg" alt="" style="max-width:450px; margin: 20px;" />
+      </ol>
+
+      <h2>Setting up Developer Environment</h2>
+      <ul>
+        <li>Installed VSCode</li>
+        <li>Installed extensions- Live Server [for real time page view] and Image [for conversion from .png to .jpg]. For Liver Server to work, make sure you right click on the index page and open it with Live Server.</li>
+        <li>Couldn't install FlameShot on Mac (for editing screenshots, optional)</li>
+        <li>Copied the template and opened the index page in VS Code.</li>
+        <li>Edited the code to make this webpage.</li>
+      </ul>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 &#60;Your name&#62; - Creative Commons Attribution Non Commercial </p>
+      <p>Source code hosted at <a href="https://gitlab.fabcloud.org/academany/fabacademy/2026/labs/kochi/students/abhishek-shah" target="_blank">gitlab.fabcloud.org</a></p>
+    </footer>
+  </body>
+</html>

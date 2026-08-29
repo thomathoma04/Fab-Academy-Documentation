@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1 - Tom Thomas - Fab Academy documentation</title>
+    <title>Week 1 - Principles & Practices, Project Management - Tom Thomas - Fab Academy</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+      .tab-bar {
+        display: flex;
+        gap: 0;
+        border-bottom: 2px solid #ccc;
+        margin: 32px 0 0;
+      }
+
+      .tab-btn {
+        padding: 10px 28px;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        font-size: 1rem;
+        cursor: pointer;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.2s, border-color 0.2s;
+      }
+
+      .tab-btn:hover {
+        color: #333;
+      }
+
+      .tab-btn.active {
+        color: #1a56a0;
+        border-bottom-color: #1a56a0;
+      }
+
+      .tab-panel {
+        display: none;
+        padding-top: 8px;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .code-box {
+        width: 100%;
+        border: 1px solid #bbb;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        font-family: monospace;
+      }
+
+      .code-box-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #2d2d2d;
+        padding: 6px 12px;
+        color: #ccc;
+        font-size: 0.78rem;
+      }
+
+      .copy-btn {
+        background: #444;
+        color: #eee;
+        border: none;
+        border-radius: 4px;
+        padding: 3px 10px;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .copy-btn:hover { background: #666; }
+      .copy-btn.copied { background: #43a047; color: #fff; }
+
+      .code-box-light .code-box-header {
+        background-color: #e0e0e0;
+        color: #333;
+      }
+
+      .code-box-light .copy-btn {
+        background: #bbb;
+        color: #333;
+      }
+
+      .code-box-light .copy-btn:hover { background: #999; }
+
+      .code-box-light .code-box-body {
+        background-color: #f5f5f5;
+        color: #222;
+      }
+
+      .code-box-body {
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        margin: 0;
+        padding: 12px;
+        font-size: 0.8rem;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+      .project-heading {
+        font-family: 'Cinzel', serif;
+        font-size: 1.4rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-top: 0;
+      }
+      .project-heading.timewinder { color: #00838f; }
+      .project-heading.comlink    { color: #6d4c2a; }
+      .project-heading .big-letter {
+        font-size: 2rem;
+        line-height: 1;
+        vertical-align: baseline;
+      }
+    </style>
   </head>
   <body>
     <div class="navbar">
@@ -16,131 +131,170 @@
     </div>
 
     <div class="content">
-      <h1 style="text-align: center;">Week 1: Project Management and Final Project</h1>
-      <br>
-      <h1 style="text-align: center;">Final Project</h1>
 
-      <p>I'm considering two projects at the moment. The final decision will be taken after getting feedback from the Fab Gurus in Super FabLab Kerala.</p>
-      <div class="grid-container">
-    <div class="left-panel">
-        <h2>TimeWinder</h2>
-      <p>A rune that gives the user the ability to control time.</p>
-      <p>
-        <img src="../images/idea2.jpg" alt="" style="max-width:320px;" />
+      <div class="week-nav">
+        <a class="week-nav-arrow disabled" title="No previous week">&#8592;</a>
+        <h1>Week 1: Principles &amp; Practices, Project Management</h1>
+        <a class="week-nav-arrow" href="week02.html" title="Week 2">&#8594;</a>
+      </div>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto;">
+        The first week covered the principles and practices of Fab Academy, exploring final project ideas
+        and setting up the tools needed for version control and documentation.
       </p>
-    </div>
-    <div class="right-panel">
-        <h2>ComLink</h2>
-      <p>A device to send status messages to close friends, families and allies.</p>
-      <p>
-        <img src="../images/idea1.jpg" alt="" style="max-width:320px;" />
-      </p>
-    </div>
-</div>
-      <br>
-      <h1 style="text-align: center;">Project Management</h1>
 
-      <p>Two tools, primarily used by developers, were set up for managing the documentation, publishing, and version control.</p>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('final-project', this)">Final Project</button>
+        <button class="tab-btn" onclick="switchTab('project-management', this)">Project Management</button>
+      </div>
 
-      <h2>Setting up Git</h2>
-      <ol>
-        <li>Installed Homebrew from the Mac Terminal using the below command. Xcode and Git installed automatically.</li>
-            <pre>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-        <br>
-        <li>Set up the ssh key using the below command. 
-          <br>Note: I chose the destination folder as .ssh in home folder. The dot makes it a hidden folder. I didn't add a passcode, but it is good to add one. And don't publish the private key anywhere. Private key is the randomart image inside the box.</li>
-            <pre>ssh-keygen -o  </pre>
-            <img src="../images/W1_I4.jpg" alt="" style="max-width:450px; margin: 20px;" />
-        <li>Copied the public key from terminal using the below command. This creates a public key & private key pair for authentication.</li>
-            <pre>cat ~/.ssh/id_ed25519.pub</pre>
-        <br>
-        <li>Logged in, added a new blank project in <a href="https://git.fablabkerala.in/">https://git.fablabkerala.in/</a> and named it <em>Tom - Fab-Academy</em></li>
-        <br>
-        <li>Added the public key I had copied in Git Preferences.</li>
-            <img src="../images/W1_I6.jpg" alt="" style="max-width:450px; margin: 20px;" />
-        <br>
-        <li>Copied clone url from git.</li>
-            <img src="../images/W1_I7.jpg" alt="" style="max-width:320px; margin: 20px;" />
-        <li>Executed the below clone command to create a Local Repo. 
-          <br>Note: The URL copied earlier needs to be added here and a tunnel is established between the lcoal repository on your system and the one on the git cloud. The tunnel's lock is the public key and the only key that will fit the lock is the private key pair you generated on your local system. </li>
-            <pre>git clone git@gitssh.fablabkerala.in:tom/tom-fab-academy.git</pre>
-            <img src="../images/W1_I8.jpg" alt="" style="max-width:450px; margin: 20px;" />
-      </ol>
+      <!-- Tab: Final Project -->
+      <div id="final-project" class="tab-panel active">
 
-      <h2>Setting up Developer Environment</h2>
-      <ul>
-        <li>Installed VSCode</li>
-        <li>Installed extensions- Live Server [for real time page view] and Image [for conversion from .png to .jpg]. For Liver Server to work, make sure you right click on the index page and open it with Live Server.</li>
-        <li>Couldn't install FlameShot on Mac (for editing screenshots, optional)</li>
-        <li>Copied the template and opened the index page in VS Code.</li>
-        <li>Edited the code to make this webpage.</li>
-      </ul>
+        <p style="margin: 24px 0 8px;">
+          I'm considering two projects at the moment. The final decision will be taken after getting feedback from the Fab Gurus in Super FabLab Kerala.
+        </p>
 
+        <div class="media-row">
+          <div class="media-photo">
+            <img src="../images/idea2.jpg" alt="TimeWinder concept">
+          </div>
+          <div class="media-desc">
+            <h3 class="project-heading timewinder"><span class="big-letter">T</span>IME<span class="big-letter">W</span>INDER</h3>
+            <p>A rune that gives the user the ability to control time. The device would use sensors and visual feedback to create an immersive experience around the concept of time manipulation.</p>
+          </div>
+        </div>
 
-     <!--  <quote>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</quote>
+        <div class="media-row reverse">
+          <div class="media-photo">
+            <img src="../images/idea1.jpg" alt="ComLink concept">
+          </div>
+          <div class="media-desc">
+            <h3 class="project-heading comlink"><span class="big-letter">C</span>OM<span class="big-letter">L</span>INK</h3>
+            <p>A device to send status messages to close friends, families and allies. A simple, low-power communication tool that lets people share their availability or mood without using a smartphone.</p>
+          </div>
+        </div>
 
-      <h2>Useful links</h2>
+      </div>
 
-      <ul>
-          <li><a href="../final-project.html">Example link to page on this website</a></li>
-          <li><a href="https://www.w3schools.com/html/html_intro.asp" target="_blank">W3 HTML chools (open in new window)</a></li>
-          <li><a href="https://gitlab.com/pages" target="_blank">GitLab Pages examples</a></li>
-      </ul>
+      <!-- Tab: Project Management -->
+      <div id="project-management" class="tab-panel">
 
-      <h2>Code Example</h2>
+        <div class="media-row">
+          <div class="media-photo">
+            <div class="code-box">
+              <div class="code-box-header">
+                <span>Homebrew Install Command</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre class="code-box-body">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-box-header">
+                <span>Generate SSH Key</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre class="code-box-body">ssh-keygen -o</pre>
+            </div>
+            <img src="../images/W1_I4.jpg" alt="SSH key generation in terminal">
+          </div>
+          <div class="media-desc">
+            <h3>Installing Git Locally</h3>
+            <ol>
+              <li>Installed Homebrew from the Mac Terminal. Xcode and Git installed automatically.</li>
+              <br>
+              <li>Set up the SSH key, choosing the destination as the home folder. The file is named with extension <code>.ssh</code>. The dot makes it a hidden folder.</li>
+              <br>
+              <li>I didn't add a passcode, but it is good to add one. And don't publish the private key anywhere — the private key is the random art image inside the box in the terminal.</li>
+            </ol>
+          </div>
+        </div>
 
-  <pre>
-  // the setup function runs once when you press reset or power the board
-  void setup() {
-    // initialize digital pin LED_BUILTIN as an output.
-    pinMode(LED_BUILTIN, OUTPUT);
-  }
+        <div class="media-row reverse">
+          <div class="media-photo">
+            <div class="code-box code-box-light">
+              <div class="code-box-header">
+                <span>Copy Public Key</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre class="code-box-body">cat ~/.ssh/id_ed25519.pub</pre>
+            </div>
+            <img src="../images/W1_I6.jpg" alt="Git preferences with SSH key">
+          </div>
+          <div class="media-desc">
+            <h3>Setting up Git Tunnel</h3>
+            <ol>
+              <li>Now that a public key &amp; private key pair has been created locally for authentication, copy the public key from terminal using the cat command.</li>
+              <br>
+              <li>Logged into GitHub, added a new blank project and named it <em>Tom - Fab-Academy</em>.</li>
+              <br>
+              <li>Go to Git Preferences and add the public key that was copied. This creates a secure tunnel between the local machine and the remote repository — the public key acts as the lock and only the local private key can open it.</li>
+            </ol>
+          </div>
+        </div>
 
-  // the loop function runs over and over again forever
-  void loop() {
-    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-    delay(1000);                       // wait for a second
-    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-    delay(1000);                       // wait for a second
-  }
-  </pre>
+        <div class="media-row">
+          <div class="media-photo">
+            <div class="code-box">
+              <div class="code-box-header">
+                <span>Clone Repository</span>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre class="code-box-body">git clone https://github.com/USERNAME/REPOSITORY.git</pre>
+            </div>
+            <img src="../images/W1_I8.jpg" alt="Successful git clone in terminal">
+          </div>
+          <div class="media-desc">
+            <h3>Cloning the Repo</h3>
+            <ol>
+              <li>Copied clone url from git. Make sure you are copying the url for clone with SSH and not with HTTPS.</li>
+              <br>
+              <li>Run the clone command locally to copy the existing GitHub files into local machine.</li>
+              <br>
+              <li>Use add, compile and push commands from the terminal to move local changes to online GitHub repository.</li>
+            </ol>
+          </div>
+        </div>
 
-      <h2>Gallery</h2>
+        <div class="media-row reverse">
+          <div class="media-photo">
+            <img src="../images/W1_vscode.jpg" alt="VSCode with project files open">
+          </div>
+          <div class="media-desc">
+            <h3>Setting up the Developer Environment</h3>
+            <p>Installed VSCode with two key extensions:</p>
+            <ul>
+              <li><strong>Live Server</strong> — real-time page preview (right-click the index page and open with Live Server)</li>
+              <li><strong>Image</strong> — converts .png screenshots to .jpg for smaller file sizes</li>
+            </ul>
+            <p>Copied the documentation template into the cloned repo and edited the HTML to build this site.</p>
+          </div>
+        </div>
 
-      <img src="../images/sample-photo.jpg" alt="Description of image" width="800" />
-      While this is an image from the images folder. Never use absolute paths (starting with /) when linking local images, always relative. -->
-<!-- 
-      <h2>Video</h2>
+      </div>
 
-      <p>From Vimeo</p>
-
-      <iframe src="https://player.vimeo.com/video/10048961" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-      <p><a href="https://vimeo.com/10048961">Sound Waves</a> from <a href="https://vimeo.com/radarboy">George Gally (Radarboy)</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-
-      <hr />
-
-      <p>From Youtube</p>
-
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/jjNgJFemlC4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-      <h2>3D Models</h2>
-
-      <div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/658c8f8a2f3042c3ad7bdedd83f1c915/embed" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-
-          <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
-              <a href="https://sketchfab.com/models/658c8f8a2f3042c3ad7bdedd83f1c915?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Dita&#39;s Gown</a>
-              by <a href="https://sketchfab.com/francisbitontistudio?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Francis Bitonti Studio</a>
-              on <a href="https://sketchfab.com?utm_medium=embed&utm_source=website&utm_campaign=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
-          </p>
-      </div> -->
     </div>
 
     <footer>
-      <p>Copyright 2026 &#60;Your name&#62; - Creative Commons Attribution Non Commercial </p>
-      <p>Source code hosted at <a href="https://gitlab.fabcloud.org/academany/fabacademy/2026/labs/kochi/students/abhishek-shah" target="_blank">gitlab.fabcloud.org</a></p>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
     </footer>
+
+    <script>
+      function switchTab(id, btn) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+      }
+
+      function copyCode(btn) {
+        const code = btn.closest('.code-box').querySelector('.code-box-body').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+        });
+      }
+    </script>
   </body>
 </html>
-
-
-

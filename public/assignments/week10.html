@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 10 - Output Devices - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week09.html" title="Week 9">&#8592;</a>
+        <h1>Week 10: Output Devices</h1>
+        <a class="week-nav-arrow" href="week11.html" title="Week 11">&#8594;</a>
+      </div>
+
+      <img class="hero-image" src="images/week10_hero.gif" alt="Output Devices — debug LED, NeoPixel ring and buzzer driven by the XIAO ESP32-C6 test board">
+      <p class="hero-caption">Output Devices — LED, NeoPixel Ring and Buzzer on the ESP32-C6 Test Board</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        This week focused on output devices — understanding how a microcontroller drives different types
+        of outputs, and testing three outputs on the ESP32-C6 test board: a debug LED, a WS2812B NeoPixel ring,
+        and a passive piezo buzzer.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week10_neopixel.jpg" alt="WS2812B NeoPixel ring showing 12 individually lit teal LEDs">
+        </div>
+        <div class="media-desc">
+          <h3>NeoPixel Ring</h3>
+          <p>
+            The <strong>WS2812B</strong> is an integrated RGB LED with a built-in driver IC in each package.
+            Each LED in the ring receives serialised 24-bit colour data (8 bits each for red, green, blue)
+            over a single data line and passes the remaining data downstream to the next LED.
+            This makes it possible to control any number of LEDs using just one GPIO pin.
+          </p>
+          <p>
+            The ring is driven using the <strong>Adafruit NeoPixel library</strong>:
+          </p>
+          <pre><code>#include &lt;Adafruit_NeoPixel.h&gt;
+Adafruit_NeoPixel ring(12, 18, NEO_GRB + NEO_KHZ800);
+
+ring.begin();
+ring.setBrightness(80);
+ring.setPixelColor(0, ring.Color(0, 210, 160)); // teal
+ring.show();</code></pre>
+          <p>
+            A <strong>100µF decoupling capacitor</strong> is placed on the 5V rail close to the NeoPixel
+            connector to absorb current spikes when multiple LEDs switch simultaneously, preventing
+            voltage dips that could reset the microcontroller.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week10_outputdevices.jpg" alt="CL8530A passive buzzer and MOSFET transistor driver circuit on the test board">
+        </div>
+        <div class="media-desc">
+          <h3>Other Output Devices</h3>
+          <h4>Buzzer</h4>
+          <p>
+            A buzzer is an audio signaling device used to emit alert beeps, chimes, alarms, or clicks. They fall into two main categories based on how they make sound (Piezoelectric vs. Magnetic) and two categories based on how they are powered (Active vs. Passive). I've used the CL8530A, a passive piezo buzzer requiring an external Pulse Width Modulation (PWM) square wave to vibrate its internal magnetic coil or piezoelectric element and generate sound. At 16Ω impedance, it draws up to 200mA, far exceeding the GPIO pin's 40mA limit. A MOSFET transistor (Q1, SOT-23) needs to be included as a switch between the GPIO and buzzer.
+          </p>
+          <h4>LED</h4>
+          <p>
+            A 1206 SMD LED is included for debugging purposes. It is a highly popular, surface-mount electronic component measuring 0.12 in × 0.06 in, and hence the designation 1206. The operating voltage depends on the colour of the LED. Shorter wavelengths of light (like blue) require higher energy gaps, which translates directly to higher operational voltage requirements.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week10_mosfet.jpg" alt="MOSFET transistor (Q1, SOT-23) switching the buzzer circuit">
+        </div>
+        <div class="media-desc">
+          <h3>Why Use a MOSFET</h3>
+          <p>
+            The ESP32-C6 GPIO pins can only supply 40mA, but the CL8530A buzzer draws up to 200mA. The MOSFET acts as an intermediary: it requires only a small gate current from the GPIO (milliamps) but can switch a large drain current (200mA+) through the buzzer. This protects the microcontroller from being overloaded while still delivering full power to the audio device.
+          </p>
+          <p>
+            In the countdown timer circuit, the MOSFET (Q1, SOT-23) functions as an amplifier between the GPIO pin and the buzzer. When the GPIO sends a HIGH signal to the gate, the transistor turns on, allowing current to flow from the drain to the source — completing the circuit and driving the buzzer. When the GPIO goes LOW, the transistor turns off, cutting the buzzer current.
+          </p>
+          <p>
+            Supporting resistors are included: R1 limits inrush current to the gate capacitance, and R4 (10kΩ) pulls the gate low during boot to prevent the buzzer from firing before the firmware initializes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week10_wowki_countdown.gif" alt="Wowki simulation of NeoPixel countdown animation — LEDs dimming one by one in teal">
+        </div>
+        <div class="media-desc">
+          <h3>NeoPixel Countdown Animation</h3>
+          <p>
+            <strong>A Wowki simulation was created to test the countdown animation logic.</strong>
+            The simulation file is attached in the Files section below.
+          </p>
+          <p>
+            The countdown animation displays elapsed time visually using the NeoPixel ring.
+            The user first rotates the encoder clockwise in the <strong>COUNTING</strong> state to set a duration;
+            each turn lights one LED on the ring (up to 12 LEDs for 12 turns).
+            When the button is pressed, the <strong>RUNNING</strong> state begins the countdown:
+            every 2 seconds, one LED dims out, giving a visual representation of time passing.
+          </p>
+          <p>
+            When all LEDs have dimmed out, the state transitions to <strong>ALARMING</strong>,
+            and the ring flashes all 12 LEDs on and off every 150ms at full brightness (teal colour, RGB 0-210-160)
+            until the button is pressed again to stop the alarm and reset to IDLE.
+          </p>
+          <p>
+            The animation uses non-blocking timing with <code>millis()</code> rather than <code>delay()</code>,
+            allowing the microcontroller to respond to the encoder and button at any time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week10_jst_pinmap.jpg" alt="JST connector pin map showing Test Board and LED ring connections">
+        </div>
+        <div class="media-desc">
+          <h3>JST Pin Map</h3>
+          <p>
+            The NeoPixel ring connects to the test board via a JST PH connector. The pin mapping is as follows:
+          </p>
+          <table style="width:100%; border-collapse:collapse; font-size:0.88rem; margin-top:8px;">
+            <thead>
+              <tr style="background:#1a56a0; color:#fff; text-align:left;">
+                <th style="padding:8px 12px;">JST Pin</th>
+                <th style="padding:8px 12px;">Test Board</th>
+                <th style="padding:8px 12px;">LED Ring</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#f5f8ff;">
+                <td style="padding:8px 12px;">1</td><td style="padding:8px 12px;">5V</td><td style="padding:8px 12px;">5V</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 12px;">2</td><td style="padding:8px 12px;">GND</td><td style="padding:8px 12px;">GND</td>
+              </tr>
+              <tr style="background:#f5f8ff;">
+                <td style="padding:8px 12px;">3</td><td style="padding:8px 12px;">GPIO18</td><td style="padding:8px 12px;">Data_In</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin-top: 12px;">
+            <strong>Note:</strong> The Data_Out pin of the NeoPixel ring is not used in this design.
+            Each LED in the ring is independently addressable through the single Data_In line,
+            so chaining to additional rings is not implemented.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 6: Code box left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo" style="display: flex; min-height: 250px;">
+          <div style="background: #1e1e1e; border: 1px solid #ccc; border-radius: 6px; overflow-y: scroll; width: 500px; max-height: 250px; padding: 12px; font-family: 'Courier New', monospace; font-size: 0.75rem; line-height: 1.4; color: #d4d4d4;">
+            <pre style="margin: 0; white-space: pre; word-wrap: normal;">#include &lt;Adafruit_NeoPixel.h&gt;
+
+// ── Pins ────────────────────────────────────────────────
+#define PIN_LED      22
+#define PIN_BUZZ     17
+#define PIN_A        1    // EC11 CLK
+#define PIN_B        2    // EC11 DT
+#define PIN_NEOPIXEL 18
+#define NUM_LEDS     12
+
+Adafruit_NeoPixel ring(NUM_LEDS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+
+// ── State machine ───────────────────────────────────────
+enum State { IDLE, COUNTING, RUNNING, ALARMING };
+State state = IDLE;
+
+// ── Encoder ─────────────────────────────────────────────
+int lastA           = 0;
+int count           = 0;
+int pending         = 0;
+unsigned long lastPulse = 0;
+const unsigned long GAP = 1000;
+
+// ── NeoPixel countdown ──────────────────────────────────
+int lit             = 0;
+unsigned long lastDim = 0;
+const unsigned long DIM_INTERVAL = 2000;  // 10 seconds
+
+// ── Buzzer alarm ────────────────────────────────────────
+unsigned long alarmStart = 0;
+const unsigned long TONE_DURATION = 1000;  // buzzer plays for 1 second
+
+// ── Helper: show N LEDs lit ─────────────────────────────
+void showRing(int n) {
+  ring.clear();
+  for (int i = 0; i &lt; n; i++) {
+    ring.setPixelColor(i, ring.Color(0, 210, 160));  // teal
+  }
+  ring.show();
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(PIN_LED,  OUTPUT);
+  pinMode(PIN_BUZZ, OUTPUT);
+  pinMode(PIN_A,    INPUT_PULLUP);
+  pinMode(PIN_B,    INPUT_PULLUP);
+
+  ring.begin();
+  ring.setBrightness(80);
+  ring.clear();
+  ring.show();
+
+  lastA = digitalRead(PIN_A);
+
+  Serial.println("=== NeoPixel Countdown Timer Test ===");
+  Serial.println("1. Rotate encoder to set number of turns (1-12)");
+  Serial.println("2. Stop rotating — countdown will start automatically");
+  Serial.println("3. One LED dims every 10 seconds");
+  Serial.println("4. When all LEDs are dimmed, buzzer sounds for 1 second");
+}
+
+void loop() {
+
+  // ── Button / Encoder reading (if in IDLE or COUNTING state) ──
+  if (state == IDLE || state == COUNTING) {
+    int currentA = digitalRead(PIN_A);
+
+    if (currentA != lastA) {
+      int dir = (digitalRead(PIN_B) != currentA) ? 1 : -1;
+      if (dir == 1) {
+        pending   = 1;
+        lastPulse = millis();
+      }
+    }
+    lastA = currentA;
+
+    // Commit the turn after GAP period
+    if (pending != 0 &amp;&amp; millis() - lastPulse &gt;= GAP) {
+      count += pending;
+      count = constrain(count, 0, NUM_LEDS);  // clamp to 0-12
+      pending = 0;
+
+      // Update display
+      showRing(count);
+      digitalWrite(PIN_LED, HIGH);
+      delay(100);
+      digitalWrite(PIN_LED, LOW);
+
+      Serial.print("Turns set: ");
+      Serial.println(count);
+
+      state = COUNTING;
+    }
+  }
+
+  // ── If in COUNTING and no new input for 3 seconds, start countdown ──
+  if (state == COUNTING &amp;&amp; millis() - lastPulse &gt;= 2000) {
+    if (count &gt; 0) {
+      lit       = count;
+      state     = RUNNING;
+      lastDim   = millis();
+      Serial.print("Starting countdown with ");
+      Serial.print(lit);
+      Serial.println(" LEDs");
+    }
+  }
+
+  // ── Countdown timer (RUNNING state) ──────────────────────────
+  if (state == RUNNING &amp;&amp; millis() - lastDim &gt;= DIM_INTERVAL) {
+    lastDim = millis();
+    lit--;
+
+    showRing(lit);
+
+    if (lit &gt; 0) {
+      Serial.print("LEDs remaining: ");
+      Serial.println(lit);
+    } else {
+      Serial.println("All LEDs dimmed — ALARM!");
+      state      = ALARMING;
+      alarmStart = millis();
+      ring.clear();
+      ring.show();
+      tone(PIN_BUZZ, 2730, TONE_DURATION);  // play for 1 second, then stop automatically
+    }
+  }
+
+  // ── Alarm: wait for buzzer duration, then reset ──────────────
+  if (state == ALARMING &amp;&amp; millis() - alarmStart &gt;= TONE_DURATION) {
+    // Flash all LEDs once
+    for (int i = 0; i &lt; NUM_LEDS; i++) {
+      ring.setPixelColor(i, ring.Color(0, 210, 160));  // teal
+    }
+    ring.show();
+    delay(200);
+    ring.clear();
+    ring.show();
+
+    state = IDLE;
+    count = 0;
+    Serial.println("\nAlarm finished — back to IDLE");
+    Serial.println("Rotate encoder to start a new countdown");
+  }
+}</pre>
+          </div>
+        </div>
+        <div class="media-desc">
+          <h3>Integrated Test — All Outputs Together</h3>
+          <p>
+            The final test ran all three outputs together using the countdown timer firmware state machine.
+            The sequence steps through four states:
+          </p>
+          <ol>
+            <li><strong>IDLE</strong> — all outputs off, waiting for encoder input</li>
+            <li><strong>COUNTING</strong> — encoder active, NeoPixel shows number of turns set (1-12 LEDs)</li>
+            <li><strong>RUNNING</strong> — countdown active, one LED dims every 2 seconds</li>
+            <li><strong>ALARMING</strong> — all LEDs dimmed, buzzer sounds for 1 second</li>
+          </ol>
+          <p>
+            Running all three outputs simultaneously confirmed there were no power supply issues —
+            the 100µF NeoPixel decoupling capacitor successfully prevented voltage dips during the countdown.
+          </p>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/test_led_buzzer_encoder_neopixel.ino"><span class="file-icon">📄</span> test_led_buzzer_encoder_neopixel.ino</a></li>
+          <li><a href="files/Wowki_timewinder.zip"><span class="file-icon">📦</span> Wowki_timewinder.zip</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>

@@ -1,10 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 2 - Tom Thomas - Fab Academy documentation</title>
+    <title>Week 2 - Computer Aided Design - Tom Thomas - Fab Academy</title>
     <link rel="stylesheet" href="../style.css">
+    <style>
+      /* ── Tabs ── */
+      .tab-bar {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin: 32px 0 0;
+      }
+      .tab-btn {
+        padding: 10px 28px;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        font-size: 1rem;
+        cursor: pointer;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .tab-btn:hover { color: #333; }
+      .tab-btn.active { color: #1a56a0; border-bottom-color: #1a56a0; }
+      .tab-panel { display: none; padding-top: 8px; }
+      .tab-panel.active { display: block; }
+
+      /* ── Hero ── */
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+
+      /* ── Step timeline ── */
+      .steps {
+        position: relative;
+        padding-left: 56px;
+        margin-top: 16px;
+      }
+      .steps::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #ddd;
+      }
+      .step {
+        position: relative;
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+        margin-bottom: 48px;
+      }
+      .step-number {
+        position: absolute;
+        left: -44px;
+        top: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #1a56a0;
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        z-index: 1;
+      }
+      .step-image {
+        flex: 0 0 45%;
+        max-width: 45%;
+      }
+      .step-image img {
+        width: 100%;
+        border-radius: 8px;
+        display: block;
+      }
+      .step-desc h3 {
+        margin-top: 0;
+        font-size: 1.05rem;
+      }
+      .step-desc p {
+        font-size: 0.95rem;
+        color: #444;
+        line-height: 1.7;
+      }
+
+      /* alternate image left / right */
+      .step.reverse { flex-direction: row-reverse; }
+
+      /* ── Embedded model ── */
+      .model-section {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+      }
+      .model-section h2 { margin-bottom: 16px; }
+      .model-section iframe {
+        border-radius: 10px;
+        max-width: 100%;
+      }
+
+      /* ── 2D tool jump cards ── */
+      .tool-cards {
+        display: flex;
+        gap: 16px;
+        margin: 28px 0 48px;
+        flex-wrap: wrap;
+      }
+      .tool-card {
+        flex: 1;
+        min-width: 140px;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: border-color 0.2s, background 0.2s;
+        display: block;
+      }
+      .tool-card:hover {
+        border-color: #1a56a0;
+        background: #f0f5ff;
+        color: #1a56a0;
+      }
+      .tool-card .tool-icon {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      /* ── 2D tool sections ── */
+      .tool-section {
+        margin-bottom: 56px;
+        padding-top: 16px;
+        border-top: 1px solid #e0e0e0;
+        scroll-margin-top: 80px;
+      }
+      .tool-section h2 { margin-bottom: 4px; }
+      .tool-section .tool-subtitle {
+        color: #888;
+        font-size: 0.85rem;
+        margin: 0 0 20px;
+      }
+
+      /* ── Image gallery ── */
+      .img-gallery {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      .img-gallery img {
+        height: 200px;
+        width: auto;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+
+      @media (max-width: 700px) {
+        .step, .step.reverse { flex-direction: column; }
+        .step-image { flex: unset; max-width: 100%; width: 100%; }
+        .tool-cards { flex-direction: column; }
+      }
+    </style>
   </head>
   <body>
     <div class="navbar">
@@ -14,98 +195,180 @@
         <a href="../about.html">About</a>
       </div>
     </div>
-      <h1 style="text-align: center;">Week 2: Computer Aided Designing</h1>
-      <p></p>
-      <p style="text-align: center;">Designing the first CAD model of my final project using AutoCad Fusion 360.</p>
-      <p style="text-align: center;"><img alt="" src="images/image0.png" style="margin-left: auto;margin-right: auto; height: 400px;"></p>
 
-      <p></p>
     <div class="content">
-       <div class="grid-container">
-         <div class="left-panel">
-          <p>I started by sketching the dials of the stop watch. Using the shortcut for entering measurements (I) makes it easier to sketch accurately.</p>
-          <p></p>
-          <p><img alt="" src="images/image3.png" style="height: 200px;"></p>
-      <p></p>
-        </div>
-      <div class="right-panel">
-        <p>I then extruded the design to a thickness of 0.01mm and sketched a profile to cut away part of the ring.</p>
-        <p></p>
-        <p><img alt="" src="images/image1.png" style="height: 200px;"></p>
-      </div>
-    </div>
-     
-          <p></p>
 
-      <div class="content">
-       <div class="grid-container">
-         <div class="left-panel">
-          <p>I sketched the needle of the stopwatch with a disc under it.</p>
-          <p></p>
-          <p><img alt="" src="images/image11.png" style="height: 200px;"></p>
-      <p></p>
-        </div>
-      <div class="right-panel">
-          <p>And extruded the disc at an offset of 1mm and the needle at an offset of 2mm. Thickness for both elements were set at 0.01mm.</p>
-        <p></p>
-          <p><img alt="" src="images/image6.png" style="height: 200px;"></p>
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week01.html" title="Week 1">&#8592;</a>
+        <h1>Week 2: Computer Aided Design</h1>
+        <a class="week-nav-arrow" href="week03.html" title="Week 3">&#8594;</a>
       </div>
-    </div>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto;">
+        This week covered both 3D and 2D computer-aided design tools —
+        modelling a stopwatch in Fusion 360 and exploring vector, raster, and photo editing software.
+      </p>
 
-      <p></p>
-      
-    <div class="content">
-       <div class="grid-container">
-         <div class="left-panel">
-          <p>I sketched the body of the stop watch and extruded it downwards by 30mm. I changed the appearance of the body to yellow metallic paint.</p>
-          <p></p>
-          <p><img alt="" src="images/image7.png" style="height: 200px;"></p>
-      <p></p>
-        </div>
-      <div class="right-panel">
-          <p>I selected the outer edge of the watch dial and extruded it downwards at an offset of 1mm and thickness 0.01mm.</p>
-        <p></p>
-          <p><img alt="" src="images/image10.png" style="height: 200px;"></p>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('tab-3d', this)">3D Design</button>
+        <button class="tab-btn" onclick="switchTab('tab-2d', this)">2D Design</button>
       </div>
-    </div>
-      <p></p>
-      <p style="text-align: center;">Finally, I rendered the model to get a photorealistic image of the watch.</p>
-      <p></p>
-      <p style="text-align: center;"><img alt="" src="images/render image.png" style="height: 200px;"></p>
-      <p></p>
-      <p style="text-align: center;">I have embedded the model below</p>
-        <iframe src="https://startupmission3.autodesk360.com/shares/public/SH28cd1QT2badd0ea72b18c942fe5b63a6d9?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
-          <p></p>
 
-          <h1>2D Design Tools</h1>
-          <h2>InkScape (Vector tool)</h2>
-          <p></p>
-          <p>Imported the Firelights logo, converted it into vector by using Trace Bitmap option. Since this was a colour image, I used the multicolour option and the tool generated vector paths for various shades of colour.</p>
-          <p></p>
-          <p><img alt="" src="images/image5.png" style="height: 200px;"></p>
-          <p></p>
-          <p>&nbsp;The output was in greyscale and I selected each path to recolour it in yellow. Since the tool differentiates paths based on colour shades, there will be defined boundaries between the colour shades in different paths.</p>
-          <p><img alt="" src="images/image4.png" style="height: 200px;"></p>
-          <p></p>
-          <h2>ProCreate (Raster)</h2>
-          <p></p>
-          <p>Used 4 screenshots to trace the movement pattern of a blue whale. Combined the patterns using the animate option to create an animation of whale swimming.</p>
-          <p>Note: Creating each element in different layers makes it easier to edit them later.</p>
-          <p></p>
-          <p><img alt="" src="images/image8.jpg" style="height: 200px;"></p>
-          <p></p>
-          <h2>Lightroom (Raster)</h2>
-          <p></p>
-          <p>Used Lightroom to edit the light and colour values of an image.</p>
-          <p><img alt="" src="images/image9.jpg" style="height: 200px;"><img alt="" src="images/image2.jpg" style="height: 200px;"></p>
+      <!-- ══ TAB: 3D Design ══ -->
+      <div id="tab-3d" class="tab-panel active">
+
+        <img src="images/Render image.jpg" alt="Final rendered stopwatch model" class="hero-image">
+        <p class="hero-caption">Final rendered model of the TimeWinder stopwatch — Fusion 360</p>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-image">
+              <img src="images/image3.jpg" alt="Sketching the watch dial">
+            </div>
+            <div class="step-desc">
+              <h3>Sketching the Dial</h3>
+              <p>Started by sketching the dials of the stopwatch. Using the shortcut for entering measurements (I) makes it easier to sketch accurately.</p>
+            </div>
+          </div>
+
+          <div class="step reverse">
+            <div class="step-number">2</div>
+            <div class="step-image">
+              <img src="images/image1.jpg" alt="Extruded dial with cut profile">
+            </div>
+            <div class="step-desc">
+              <h3>Extruding and Cutting</h3>
+              <p>Extruded the design to a thickness of 0.01mm and sketched a profile to cut away part of the ring, defining the dial shape.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-image">
+              <img src="images/image11.jpg" alt="Needle and disc sketch">
+            </div>
+            <div class="step-desc">
+              <h3>Adding the Needle</h3>
+              <p>Sketched the needle of the stopwatch along with a disc underneath it to create the central hub assembly.</p>
+            </div>
+          </div>
+
+          <div class="step reverse">
+            <div class="step-number">4</div>
+            <div class="step-image">
+              <img src="images/image6.jpg" alt="Extruded needle and disc">
+            </div>
+            <div class="step-desc">
+              <h3>Extruding the Needle Assembly</h3>
+              <p>Extruded the disc at an offset of 1mm and the needle at an offset of 2mm. Thickness for both elements was set at 0.01mm.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-image">
+              <img src="images/image7.jpg" alt="Watch body with yellow metallic finish">
+            </div>
+            <div class="step-desc">
+              <h3>Building the Body</h3>
+              <p>Sketched the body of the stopwatch and extruded it downwards by 30mm. Changed the appearance to yellow metallic paint.</p>
+            </div>
+          </div>
+
+          <div class="step reverse">
+            <div class="step-number">6</div>
+            <div class="step-image">
+              <img src="images/image10.jpg" alt="Outer edge extrusion">
+            </div>
+            <div class="step-desc">
+              <h3>Finishing the Bezel</h3>
+              <p>Selected the outer edge of the watch dial and extruded it downwards at an offset of 1mm with a thickness of 0.01mm to form the bezel.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="model-section">
+          <h2>Interactive 3D Model</h2>
+          <p>Explore the model below</p>
+          <iframe src="https://startupmission3.autodesk360.com/shares/public/SH28cd1QT2badd0ea72b18c942fe5b63a6d9?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0"></iframe>
+        </div>
+
+      </div>
+
+      <!-- ══ TAB: 2D Design ══ -->
+      <div id="tab-2d" class="tab-panel">
+
+        <div class="tool-cards">
+          <a class="tool-card" href="#inkscape">
+            <span class="tool-icon">✏️</span>
+            Inkscape
+          </a>
+          <a class="tool-card" href="#procreate">
+            <span class="tool-icon">🎨</span>
+            Procreate
+          </a>
+          <a class="tool-card" href="#lightroom">
+            <span class="tool-icon">📷</span>
+            Lightroom
+          </a>
+        </div>
+
+        <div class="tool-section" id="inkscape">
+          <h2>Inkscape</h2>
+          <p class="tool-subtitle">Vector design tool</p>
+          <p>Imported the Firelights logo and converted it into vector using the Trace Bitmap option. Since this was a colour image, the multicolour option was used and the tool generated vector paths for various shades of colour.</p>
+          <p>The output was in greyscale — each path was then selected and recoloured in yellow. Since the tool differentiates paths based on colour shades, there are defined boundaries between the colour shades in different paths.</p>
+          <div class="img-gallery">
+            <img src="images/image5.jpg" alt="Inkscape trace bitmap result">
+            <img src="images/image4.jpg" alt="Recoloured vector output">
+          </div>
+        </div>
+
+        <div class="tool-section" id="procreate">
+          <h2>Procreate</h2>
+          <p class="tool-subtitle">Raster illustration tool</p>
+          <p>Used 4 screenshots to trace the movement pattern of a blue whale. Combined the patterns using the animate option to create an animation of the whale swimming.</p>
+          <p><strong>Note:</strong> Creating each element in a different layer makes it easier to edit them later.</p>
+          <div class="img-gallery">
+            <img src="images/image8.jpg" alt="Whale animation frames in Procreate">
+          </div>
+        </div>
+
+        <div class="tool-section" id="lightroom">
+          <h2>Lightroom</h2>
+          <p class="tool-subtitle">Raster photo editing tool</p>
+          <p>Used Lightroom to edit the light and colour values of an image, comparing the original and the edited result side by side.</p>
+          <div class="img-gallery">
+            <img src="images/image9.jpg" alt="Original image">
+            <img src="images/image2.jpg" alt="Lightroom edited image">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/pocket watch.f3d"><span class="file-icon">📦</span> pocket watch.f3d</a></li>
+        </ul>
+      </div>
+
     </div>
 
     <footer>
-      <p>Copyright 2026 &#60;Your name&#62; - Creative Commons Attribution Non Commercial </p>
-      <p>Source code hosted at <a href="https://gitlab.fabcloud.org/academany/fabacademy/2026/labs/kochi/students/abhishek-shah" target="_blank">gitlab.fabcloud.org</a></p>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
     </footer>
+
+    <script>
+      function switchTab(id, btn) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+      }
+    </script>
   </body>
 </html>
-
-
-

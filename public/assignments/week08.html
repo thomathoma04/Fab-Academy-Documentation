@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 - Electronics Production - Tom Thomas - Fab Academy</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+      .hero-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 24px 0 10px;
+        display: block;
+      }
+      .hero-caption {
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a href="../index.html">Topics</a>
+        <a href="../final-project.html">Project</a>
+        <a href="../about.html">About</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="week-nav">
+        <a class="week-nav-arrow" href="week07.html" title="Week 7">&#8592;</a>
+        <h1>Week 8: Electronics Production</h1>
+        <a class="week-nav-arrow" href="week09.html" title="Week 9">&#8594;</a>
+      </div>
+
+      <img class="hero-image" src="images/week08_hero.jpg" alt="Electronics Production — completed PCB">
+      <p class="hero-caption">Electronics Production</p>
+
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
+        Placeholder — add week summary.
+      </p>
+
+      <!-- Row 1: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_01.jpg" alt="KiCad schematic for the XIAO ESP32-C6 test board with JST connectors">
+        </div>
+        <div class="media-desc">
+          <h3>Schematic — Test Board</h3>
+          <p>
+            This week I designed and milled a test board built around the <strong>Seeed XIAO ESP32-C6</strong>
+            microcontroller. The board uses <strong>JST PH connectors</strong> to break out all the peripheral
+            connections — rotary encoder, NeoPixel ring, servo, buzzer, and mode switch — so each module of the
+            countdown timer can be wired up and tested independently before committing to a final integrated design.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_02.jpg" alt="KiCad Board Setup dialog showing Design Rules Constraints">
+        </div>
+        <div class="media-desc">
+          <h3>Design Rules in KiCad</h3>
+          <p>
+            KiCad's <strong>Board Setup</strong> dialog (File → Board Setup) provides three complementary ways
+            to enforce design rules:
+          </p>
+          <p>
+            <strong>Constraints</strong> — set the absolute minimums the board must respect: minimum clearance,
+            track width, via diameter, drill size, and copper-to-edge clearance. These act as a hard floor —
+            the DRC will flag anything that violates them.
+          </p>
+          <p>
+            <strong>Pre-defined Sizes</strong> — a list of approved track widths and via sizes that appear in
+            the interactive router's dropdown, making it easy to pick the right size without typing values each time.
+          </p>
+          <p>
+            <strong>Net Classes</strong> — group nets (e.g. power, signal, ground) and assign each class its
+            own clearance and track width rules. This lets power traces automatically route wider than signal
+            traces without manual overrides.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_pcb.jpg" alt="KiCad PCB Editor showing the routed test board layout with JST connectors">
+        </div>
+        <div class="media-desc">
+          <h3>PCB Layout</h3>
+          <p>
+            The PCB was laid out in KiCad's PCB Editor. Components were arranged to keep related
+            parts close together — decoupling capacitors next to their component, JST connectors
+            grouped along the edges for easy cable access, and the XIAO module centred on the board.
+          </p>
+          <p>A few good practices followed during layout:</p>
+          <ul>
+            <li>Place decoupling capacitors as close as possible to the power pins they serve.</li>
+            <li>Route power traces wider than signal traces to handle higher current.</li>
+            <li>Avoid 90° corners in traces — use 45° bends to reduce signal issues and improve milling quality.</li>
+            <li>Keep connector footprints at the board edge so cables don't cross over other components.</li>
+            <li>Run a DRC (Design Rule Check) before exporting to catch clearance violations early.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 4: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_03.jpg" alt="KiCad Plugin and Content Manager showing the gerber2png plugin installed">
+        </div>
+        <div class="media-desc">
+          <h3>Installing the Gerber2PNG Plugin</h3>
+          <p>
+            The <strong>gerber2png Plug-in for KiCad</strong> was installed via <em>Tools → Plugin and Content Manager</em>.
+            It exports Gerber production files, IPC-356 netlist, BOM, and pick-and-place files in one click, then
+            opens the <a href="https://gerber2png.fablabkerala.in" target="_blank">Gerber2PNG</a> web app directly
+            for upload and preview.
+          </p>
+          <p>
+            This eliminates the manual export steps and ensures a consistent set of fabrication files every time —
+            particularly useful for Fab Lab milling workflows where the Gerber and PNG outputs are both needed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_04.jpg" alt="KiCad error dialog: FOOTPRINT object has no attribute HasFieldByName">
+        </div>
+        <div class="media-desc">
+          <h3>Plugin Error after KiCad Upgrade</h3>
+          <p>
+            After upgrading KiCad, the gerber2png plugin stopped working — throwing the error
+            <em>"FOOTPRINT object has no attribute 'HasFieldByName'"</em>. This is a compatibility
+            break introduced by the KiCad API change in the newer version, which the plugin has not
+            yet been updated to handle.
+          </p>
+          <p>
+            As a workaround, Gerber files were generated manually via
+            <strong>File → Fabrication Outputs → Gerbers</strong> and uploaded directly to the
+            <a href="https://gerber2png.fablabkerala.in" target="_blank">Gerber2PNG</a> web tool.
+            This tool was developed by <strong>FabLab Kerala</strong> and is currently used by
+            Fab Labs across the world to convert Gerber files into high-resolution PNG images
+            for milling.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 5: Photo left, description right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_05.jpg" alt="KiCad 3D Viewer showing the test board with SMD components and JST connectors">
+        </div>
+        <div class="media-desc">
+          <h3>3D Viewer and Gerber Files</h3>
+          <p>
+            The 3D Viewer was used to inspect the board before generating fabrication files.
+            It gives a realistic preview of component placement, pad sizes, and the spacing
+            between parts.
+          </p>
+          <p>
+            I was asked to ensure there is enough space between components and copper traces
+            to solder comfortably — tight spacing makes it difficult to get the soldering iron
+            in without bridging adjacent pads or traces.
+          </p>
+          <p>
+            To export the Gerber files, go to <strong>File → Fabrication Outputs → Gerbers</strong>.
+            Plot the necessary layers, then click <strong>Generate Drill Files</strong> and select
+            the destination folder.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 6: Description left, photo right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_06.jpg" alt="Gerber2PNG web tool showing the test board trace and outline PNG outputs">
+        </div>
+        <div class="media-desc">
+          <h3>Gerber2PNG — Generating Milling Files</h3>
+          <p>
+            The Gerber files were uploaded to <a href="https://gerber2png.fablabkerala.in" target="_blank">Gerber2PNG</a>,
+            which generates two PNG outputs needed for milling:
+          </p>
+          <p>
+            <strong>Traces PNG</strong> — the copper layer image used to mill the circuit traces and pads.
+            The milling bit follows the gaps between traces to isolate them.
+          </p>
+          <p>
+            <strong>Outline PNG</strong> — the board edge (Edge.Cuts layer) used to cut the board outline
+            from the substrate.
+          </p>
+          <p>
+            Both outputs are marked <em>Ready for Mods</em> and can be imported directly into
+            <strong>Mods</strong> using the <em>Open in Mods</em> button, without any intermediate
+            file handling.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 7: Photo left, description right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_07.jpg" alt="Mods CE toolpath generation interface showing the PCB milling workflow">
+        </div>
+        <div class="media-desc">
+          <h3>Generating Toolpaths with Mods</h3>
+          <p>
+            <strong>Mods</strong> (modsproject.org) is an open-source, browser-based CAM tool developed
+            by the <strong>MIT Center for Bits and Atoms</strong>. It converts PNG images of PCB layers
+            into machine toolpaths for milling, and is widely used across the Fab Lab network.
+          </p>
+          <p>
+            The workflow is built as a visual node graph — the traces PNG is fed into the
+            <em>Traces image</em> input and the outline PNG into the <em>Exterior image</em> input.
+            Mods calculates the milling paths, previews the result, and outputs the toolpath file
+            ready to send to the milling machine.
+          </p>
+          <p>
+            The file <strong>CarveraMODSv4.3.json</strong> was loaded into Mods. This configuration
+            file was created by <strong>Sibin</strong> with all machine values pre-set for the
+            Carvera mill used at Fab Lab Kerala, so the feeds, speeds, and tool settings are
+            already dialled in without needing to configure them manually each time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 9: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_08.jpg" alt="Mods combined job flow showing both trace and outline milling paths">
+        </div>
+        <div class="media-desc">
+          <h3>Creating Job File</h3>
+          <p>
+            The trace image was uploaded into the Mods window via the <em>Traces image</em> input node.
+          </p>
+          <p>
+            Clicking <strong>Calculate</strong> processes the image and generates the <strong>job.nc</strong>
+            file — a G-code file containing the toolpath the milling machine will follow to isolate the
+            copper traces on the board.
+          </p>
+          <p>
+            The outline PNG file was uploaded to the <em>Exterior image</em> section of the Mods window
+            and clicked calculate to generate the <strong>job_Test_Board.nc</strong> file, which will be used for milling.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 10: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <div class="photo-placeholder">Image — Carvera desktop CNC milling machine</div>
+        </div>
+        <div class="media-desc">
+          <h3>Milling the PCB with Carvera</h3>
+          <p>
+            The <strong>Carvera</strong> is a compact desktop CNC milling machine by Makera, designed
+            for precision work including PCB milling. It uses a high-speed spindle and an automatic
+            tool changer (ATC) to switch between tools without stopping the job — useful when a board
+            requires different bits for trace isolation and the board outline cut.
+          </p>
+          <p>
+            The Carvera's enclosed design keeps chips contained and reduces noise — a practical
+            advantage in a shared lab space. The auto tool change also means there is no need to
+            manually swap bits between operations, which reduces the chance of losing the XY zero
+            between passes.
+          </p>
+          <p>
+            The <strong>Carvera Controller</strong> desktop app needs to be installed from
+            <a href="https://global.makera.com/pages/software" target="_blank">global.makera.com/pages/software</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 11: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_carvera01.jpg" alt="Carvera Controller app showing the starting screen">
+        </div>
+        <div class="media-desc">
+          <h3>Starting Carvera Controller</h3>
+          <ul>
+            <li>While opening the app, if you encounter a warning that the app is damaged, open a Terminal window and run the command: <code>sudo xattr -r -d com.apple.quarantine /Applications/CarveraController.app</code></li>
+            <li>Use the <strong>Status and Connection</strong> option (top left) to connect to the machine over WiFi.</li>
+            <li>Use the <strong>Tool Status Control</strong> option to change the tool to probe.</li>
+            <li>The G-code files generated by Mods were loaded into the Carvera Controller desktop app.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 12: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_carvera02.jpg" alt="Carvera Controller showing the controller window with axis controls">
+        </div>
+        <div class="media-desc">
+          <h3>Setting Origin in Carvera</h3>
+          <ul>
+            <li>Use the arrow along the right edge to switch to the controller window.
+              <ul>
+                <li>X axis controls the spindle.</li>
+                <li>Y axis controls the bed.</li>
+                <li>Z axis controls the tool height — be extra careful with this axis.</li>
+              </ul>
+            </li>
+            <li>Tap on the probe to enable the laser guide. Use the above controls to move the probe to the desired location, then select <strong>Set Origin</strong>. Use current position with zero X and Y offsets.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 13: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_carvera03.jpg" alt="Carvera Controller Config and Run dialog with auto leveling options">
+        </div>
+        <div class="media-desc">
+          <h3>Running the Job</h3>
+          <ul>
+            <li>Click <strong>Config and Run</strong> (bottom left).</li>
+            <li>In the pop-up window, select <strong>Auto Vacuum</strong>.</li>
+            <li>If auto leveling was not done previously, enable it. You can customise the density of the auto leveling probe by adjusting the number of points along the X and Y axes.</li>
+            <li>Click <strong>Run</strong> to start the job.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 14: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_milling.gif" alt="Carvera CNC milling the PCB traces">
+        </div>
+        <div class="media-desc">
+          <h3>Milling the PCB</h3>
+          <ul>
+            <li>The board was already fixed to the spoilboard and the XYZ origin that was set earlier was used. Close the lid before milling starts.</li>
+            <li>The machine first mapped the outline, which allows us to ensure the milling area is within the board.</li>
+            <li>Then it picked the end mill and ran the trace isolation pass to mill the copper traces, followed by the drill pass for through-holes, and finally the outline cut to separate the board from the substrate.</li>
+            <li>Once completed, the dust was vacuumed off, the top layer was sanded to remove the burr, and the board was checked to make sure all traces had been milled correctly.</li>
+            <li>Separated the cut board from the spoilboard and removed the gum residue from the underside.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 15: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_ibom.jpg" alt="Interactive HTML BOM showing component placement on the PCB">
+        </div>
+        <div class="media-desc">
+          <h3>List of Components</h3>
+          <ul>
+            <li>From the <strong>Plugin and Content Manager</strong> window, install the plugin <strong>Interactive Html BOM</strong>.</li>
+            <li>This will add a new shortcut to the PCB editor window.</li>
+            <li>This shortcut allows generation of an interactive Bill of Materials with an image showing where each component goes on the board. The BOM is attached below.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 16: Description left, photo right -->
+      <div class="media-row reverse">
+        <div class="media-photo">
+          <img src="images/week08_bom.jpg" alt="Printed BOM with double-sided tape for component sourcing">
+        </div>
+        <div class="media-desc">
+          <h3>Components from Inventory</h3>
+          <ul>
+            <li>The BOM was printed and a double-sided tape was stuck next to each item.</li>
+            <li>Components were sourced from the inventory room.</li>
+            <li>Only one box is to be opened at a time and the balance quantities should be put back in the same trays.</li>
+            <li>The naming of component trays can be done better(!)</li>
+          </ul>
+          <p>
+            Components were placed and soldered onto the milled PCB. The board uses SMD (surface-mount) components
+            throughout, and lead free solder was used.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 17: Photo left, description right -->
+      <div class="media-row">
+        <div class="media-photo">
+          <img src="images/week08_pcb_final.jpg" alt="Milled PCB with components placed and soldered">
+        </div>
+        <div class="media-desc">
+          <h3>Placing Components</h3>
+          <p>A few good practices followed during soldering:</p>
+          <ul>
+            <li>Start with the smallest, lowest-profile components first.</li>
+            <li>Heat one of the pads, apply a small amount of solder to it, then hold the component in place and reflow to tack it down before soldering the second pad.</li>
+            <li>Check polarity before soldering the components.</li>
+            <li>After soldering each component, visually inspect for solder bridges, especially between closely spaced pads on the JST connectors and the transistor (Q1).</li>
+            <li>Use a multimeter in continuity mode to verify there are no shorts between power and ground before powering the board.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="files-section">
+        <h2>Files</h2>
+        <ul class="files-list">
+          <li><a href="files/TB Gerber.zip"><span class="file-icon">📦</span> TB Gerber.zip</a></li>
+          <li><a href="files/TB Gerber2png.zip"><span class="file-icon">🖼️</span> TB Gerber2png.zip</a></li>
+          <li><a href="files/CarveraMODSv4.3.json"><span class="file-icon">📄</span> CarveraMODSv4.3.json</a></li>
+          <li><a href="files/TB Job.nc"><span class="file-icon">📄</span> TB Job.nc</a></li>
+          <li><a href="files/BOM.zip"><span class="file-icon">📦</span> BOM.zip</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>Copyright 2026 Tom Thomas - Creative Commons Attribution Non Commercial</p>
+      <p>Source code hosted at <a href="https://github.com/thomathoma04/Fab-Academy-Documentation" target="_blank">github.com</a></p>
+    </footer>
+  </body>
+</html>
