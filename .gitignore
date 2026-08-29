@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+Thumbs.db
+
+# Node (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (if applicable)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
